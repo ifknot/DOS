@@ -10,16 +10,20 @@ unsigned char *mem[] = {(unsigned char*) EVEN_LINES,
 
 int read_key_stroke();
 #pragma aux read_key_stroke = \
-"   xor ax, ax"    \
-"   int 0x16"      \
-parm [ax]          \
+"   xor ax, ax"\
+"   int 0x16"\
+parm [ax]\
 value [ax];
 
-void pixel();
+void pixel(uint16_t c);
 #pragma aux pixel = \
-"   mov ax, 0xB800"    \
-"   mov es, ax"      \
-parm [ax es]          \
+"   mov ax, 0xB800 \\ even lines "\
+"   mov es, ax"\
+"   mov di, 0"\
+"   mov ax,0AAh"\
+"   rep stosb"\
+parm [cx]\
+modify [ax cx es di];
 
 
 int main() {
@@ -91,6 +95,7 @@ int main() {
     r.h.al = 6;
     int86(0x10, &r, &r);
 
+    pixel(320);
 
     r.x.ax = 0x0000;
     int86(0x16, &r, &r);
@@ -119,11 +124,7 @@ int main() {
 
     std::cout << "\nSwitch back?\n";
 
-    pixel();
-
-    for(int i = 0; i < 80; ++i) {
-        *(mem[0] + i) ^= 0xFF;
-    }
+    pixel(160);
 
     r.x.ax = 0x0000;
     int86(0x16, &r, &r);
