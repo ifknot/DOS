@@ -2,11 +2,29 @@
 #include <dos.h>
 #include <stdint>
 
+#define EVEN_LINES 0xB8000
+#define ODD_LINES 0xBA000
+
+unsigned char *mem[] = {(unsigned char*) EVEN_LINES,
+                        (unsigned char*) ODD_LINES};
+
+int read_key_stroke();
+#pragma aux read_key_stroke = \
+"   xor ax, ax"    \
+"   int 0x16"      \
+parm [ax]          \
+value [ax];
+
+void pixel();
+#pragma aux pixel = \
+"   mov ax, 0xB800"    \
+"   mov es, ax"      \
+parm [ax es]          \
+
+
 int main() {
 
     std::cout << "Hello World!\n";
-
-    delay(1000); // wait 1 second
 
     std::cout << "Switch mode?\n";
 
@@ -32,8 +50,8 @@ int main() {
           unless the extended keyboard BIOS is present
         - all registers are preserved except AX and FLAGS
     */
-    r.x.ax = 0x0000;
-    int86(0x16, &r, &r);
+
+    read_key_stroke();
 
     // int 10h set video mode
     /**
@@ -59,7 +77,8 @@ int main() {
            = 11  640x480 B/W graphics (MCGA,VGA)
            = 12  640x480 16 color graphics (VGA)
            = 13  320x200 256 color graphics (MCGA,VGA)
-           = 8x  EGA, MCGA or VGA ignore bit 7, see below
+           = 8x  EGA
+           , MCGA or VGA ignore bit 7, see below
            = 9x  EGA, MCGA or VGA ignore bit 7, see below
 
 
@@ -72,11 +91,39 @@ int main() {
     r.h.al = 6;
     int86(0x10, &r, &r);
 
-     std::cout << (uint16_t)r.h.ah << "\t" << r.h.al;
+
+    r.x.ax = 0x0000;
+    int86(0x16, &r, &r);
+
+    std::cout << (uint16_t)r.h.ah << "\t" << r.h.al << '\n';
+
+    // int 1A realtime clock bios service
+    /**
+        AH = 00 read system clock counter
+
+        on return:
+        AL = midnight flag, 1 if 24 hours passed since reset
+        CX = high order word of tick count
+        DX = low order word of tick count
+    */
+    r.x.ax = 0x0000;
+    int86(0x1A, &r, &r);
+    std::cout << r.x.cx << ' ' << r.x.dx << '\n';
+    uint16_t sec = r.x.dx;
 
     delay(1000); // wait 1 second
 
-    std::cout << "\nSwitch mode?\n";
+    r.x.ax = 0x0000;
+    int86(0x1A, &r, &r);
+    std::cout << r.x.cx << ' ' << r.x.dx << '\n' << (r.x.dx - sec) / 18 << " seconds\n";
+
+    std::cout << "\nSwitch back?\n";
+
+    pixel();
+
+    for(int i = 0; i < 80; ++i) {
+        *(mem[0] + i) ^= 0xFF;
+    }
 
     r.x.ax = 0x0000;
     int86(0x16, &r, &r);
