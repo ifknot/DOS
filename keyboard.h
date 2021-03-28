@@ -50,9 +50,25 @@
 /*
 * INT 16 - Keyboard BIOS Services
 */
-#define KB_AWAIT_READ   0x00
+#define KB_READ         0x00
 #define KB_KEY_STATUS   0x01
 #define KB_SHIFT_STATUS 0x02
+/*
+* keyboard scan codes
+*/
+#define J_KEY           0x24
+/*
+* keyboard shift code
+*/
+#define RIGHT_SHIFT_KEY 0x01
+#define LEFT_SHIFT_KEY  0x02
+#define CTRL_KEY        0x04
+#define ALT_KEY         0x08
+#define SCROLL_LOCK     0x10
+#define NUM_LOCK        0x20
+#define CAPS_LOCK       0x40
+#define INSERT          0x80
+
 
 namespace xt {
 
@@ -71,7 +87,9 @@ namespace xt {
 
         key_t await_keypress();
 
-        bool is_pressed(char ascii);
+        bool is_pressed(char scan_code);
+
+        bool is_modifier(char flags);
 
     private:
 

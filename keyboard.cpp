@@ -39,29 +39,36 @@ namespace xt {
 
     keyboard::key_t keyboard::await_keypress() {
         union REGS r;
-        r.h.ah = KB_AWAIT_READ;
+        r.h.ah = KB_READ;
         int86(0x16, &r, &r);
         return std::make_pair(r.h.ah,r.h.al);
     }
 
-    bool keyboard::is_pressed(char scan) {
-        char pressed = 0;   // default false
+    bool keyboard::is_pressed(char scan_code) {
+        bool pressed = false;
         __asm {
 
                 .8086
                 push ax
                 mov ah, KB_KEY_STATUS
                 int 0x16
-                je NO           // is a key pressed?
-                mov ah, KB_AWAIT_READ
+                je NO               // is a key pressed?
+                mov ah, KB_READ
                 int 0x16
-                cmp ah, scan    // is it the right one?
+                cmp ah, scan_code   // is it the right one?
                 jne NO
-                mov pressed, 1  // set true
+                mov pressed, 1      // set true
         NO:     pop ax
 
         }
-        return (bool)pressed;
+        return pressed;
+    }
+
+    bool keyboard::is_modifier(char flags) {
+        union REGS r;
+        r.h.ah = KB_SHIFT_STATUS;
+        int86(0x16, &r, &r);
+        return r.h.al & flags;
     }
 
 }
