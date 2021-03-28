@@ -47,7 +47,12 @@
 #define KB_YES_PWD      0xFA
 #define KB_NO_PWD       0xF1
 #define KB_AUX_OK       0x00
-
+/*
+* INT 16 - Keyboard BIOS Services
+*/
+#define KB_AWAIT_READ   0x00
+#define KB_KEY_STATUS   0x01
+#define KB_SHIFT_STATUS 0x02
 
 namespace xt {
 
@@ -58,11 +63,15 @@ namespace xt {
 
     public:
 
+        typedef std::pair<char, char> key_t;
+
         static keyboard& instance();
 
         char command(char cmd);
 
-        std::pair<char, char> await_keypres();
+        key_t await_keypress();
+
+        bool is_pressed(char ascii);
 
     private:
 

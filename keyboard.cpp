@@ -1,4 +1,7 @@
 #include "keyboard.h"
+#include <dos.h>
+
+#include <iostream>
 
 namespace xt {
 
@@ -8,8 +11,9 @@ namespace xt {
     }
 
     char keyboard::command(char cmd) {
-        unsigned char result = 1;
+        char result = 1;
         __asm {
+
                 .8086
                 PUSH AX
                 PUSH DX
@@ -28,12 +32,36 @@ namespace xt {
                 POP CX
                 POP DX
                 POP AX
+
         }
         return result;
     }
 
-    std::pair<char, char> keyboard::await_keypres() {
-        return make_pair('A','B');
+    keyboard::key_t keyboard::await_keypress() {
+        union REGS r;
+        r.h.ah = KB_AWAIT_READ;
+        int86(0x16, &r, &r);
+        return std::make_pair(r.h.ah,r.h.al);
+    }
+
+    bool keyboard::is_pressed(char scan) {
+        char pressed = 0;   // default false
+        __asm {
+
+                .8086
+                push ax
+                mov ah, KB_KEY_STATUS
+                int 0x16
+                je NO           // is a key pressed?
+                mov ah, KB_AWAIT_READ
+                int 0x16
+                cmp ah, scan    // is it the right one?
+                jne NO
+                mov pressed, 1  // set true
+        NO:     pop ax
+
+        }
+        return (bool)pressed;
     }
 
 }
