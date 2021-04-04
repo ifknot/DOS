@@ -1,6 +1,6 @@
 #include "keyboard.h"
-#include <dos.h>
 
+#include <dos.h>
 #include <iostream>
 
 namespace xt {

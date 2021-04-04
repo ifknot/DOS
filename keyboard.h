@@ -1,5 +1,4 @@
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#pragma once
 
 #include <iostream>
 #include <utility>
@@ -101,7 +100,7 @@ namespace xt {
 
 }
 
-#endif
+//#endif  // KEYBOARD_H
 
 
 
