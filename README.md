@@ -2,3 +2,17 @@
 DOS 16 bit Real Mode Software
 
 Built using [Open Watcom V2 Fork](https://open-watcom.github.io/)
+
+## Why DOS16?
+
+## Licence
+
+## Usage
+
+## What is this repository for?
+
+## How do I get setup?
+
+## Contribution guidlines
+
+## Who do I talk to?
