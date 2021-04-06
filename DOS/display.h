@@ -20,16 +20,14 @@ namespace dos {
 
         video_state_t mode();
 
-        std::vector<bool>& modes();
+        std::vector<bool> modes();
 
 
     private:
 
-        std::vector<bool> modes_;
-
         display() {}
         display(display const&);
-        void operator=(display const&);
+        void operator=(display const&) {}
 
     };
 

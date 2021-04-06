@@ -27,8 +27,10 @@ namespace dos {
 		return v;
 	}
 
-	std::vector<bool>& display::modes() {
-		return modes_;
+	std::vector<bool> display::modes() {
+		return std::vector<bool>();
 	}
+
+	
 
 }
