@@ -1,40 +1,50 @@
 !define BLANK ""
-C:\Users\ifkno\DOSBOX\source\display.obj : C:\Users\ifkno\DOSBOX\source\disp&
-lay.cpp .AUTODEPEND
+C:\Users\ifkno\DOSBOX\DOS\DOS\display.obj : C:\Users\ifkno\DOSBOX\DOS\DOS\di&
+splay.cpp .AUTODEPEND
  @C:
- cd C:\Users\ifkno\DOSBOX\source
+ cd C:\Users\ifkno\DOSBOX\DOS\DOS
  *wpp display.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.obj -ml&
  -xs -xr
 
-C:\Users\ifkno\DOSBOX\source\keyboard.obj : C:\Users\ifkno\DOSBOX\source\key&
-board.cpp .AUTODEPEND
+C:\Users\ifkno\DOSBOX\DOS\DOS\keyboard.obj : C:\Users\ifkno\DOSBOX\DOS\DOS\k&
+eyboard.cpp .AUTODEPEND
  @C:
- cd C:\Users\ifkno\DOSBOX\source
+ cd C:\Users\ifkno\DOSBOX\DOS\DOS
  *wpp keyboard.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.obj -m&
 l -xs -xr
 
-C:\Users\ifkno\DOSBOX\source\main.obj : C:\Users\ifkno\DOSBOX\source\main.cp&
-p .AUTODEPEND
+C:\Users\ifkno\DOSBOX\DOS\DOS\main.obj : C:\Users\ifkno\DOSBOX\DOS\DOS\main.&
+cpp .AUTODEPEND
  @C:
- cd C:\Users\ifkno\DOSBOX\source
+ cd C:\Users\ifkno\DOSBOX\DOS\DOS
  *wpp main.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.obj -ml -x&
 s -xr
 
-C:\Users\ifkno\DOSBOX\source\test_keyboard.obj : C:\Users\ifkno\DOSBOX\sourc&
-e\test_keyboard.cpp .AUTODEPEND
+C:\Users\ifkno\DOSBOX\DOS\DOS\test_display.obj : C:\Users\ifkno\DOSBOX\DOS\D&
+OS\test_display.cpp .AUTODEPEND
  @C:
- cd C:\Users\ifkno\DOSBOX\source
+ cd C:\Users\ifkno\DOSBOX\DOS\DOS
+ *wpp test_display.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.ob&
+j -ml -xs -xr
+
+C:\Users\ifkno\DOSBOX\DOS\DOS\test_keyboard.obj : C:\Users\ifkno\DOSBOX\DOS\&
+DOS\test_keyboard.cpp .AUTODEPEND
+ @C:
+ cd C:\Users\ifkno\DOSBOX\DOS\DOS
  *wpp test_keyboard.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.o&
 bj -ml -xs -xr
 
-C:\Users\ifkno\DOSBOX\source\test.exe : C:\Users\ifkno\DOSBOX\source\display&
-.obj C:\Users\ifkno\DOSBOX\source\keyboard.obj C:\Users\ifkno\DOSBOX\source\&
-main.obj C:\Users\ifkno\DOSBOX\source\test_keyboard.obj C:\Users\ifkno\DOSBO&
-X\source\display.h C:\Users\ifkno\DOSBOX\source\keyboard.h C:\Users\ifkno\DO&
-SBOX\source\test_keyboard.h .AUTODEPEND
+C:\Users\ifkno\DOSBOX\DOS\DOS\test.exe : C:\Users\ifkno\DOSBOX\DOS\DOS\displ&
+ay.obj C:\Users\ifkno\DOSBOX\DOS\DOS\keyboard.obj C:\Users\ifkno\DOSBOX\DOS\&
+DOS\main.obj C:\Users\ifkno\DOSBOX\DOS\DOS\test_display.obj C:\Users\ifkno\D&
+OSBOX\DOS\DOS\test_keyboard.obj C:\Users\ifkno\DOSBOX\DOS\DOS\display.h C:\U&
+sers\ifkno\DOSBOX\DOS\DOS\display_types.h C:\Users\ifkno\DOSBOX\DOS\DOS\keyb&
+oard.h C:\Users\ifkno\DOSBOX\DOS\DOS\test_display.h C:\Users\ifkno\DOSBOX\DO&
+S\DOS\test_keyboard.h .AUTODEPEND
  @C:
- cd C:\Users\ifkno\DOSBOX\source
- @%write test.lk1 FIL display.obj,keyboard.obj,main.obj,test_keyboard.obj
+ cd C:\Users\ifkno\DOSBOX\DOS\DOS
+ @%write test.lk1 FIL display.obj,keyboard.obj,main.obj,test_display.obj,tes&
+t_keyboard.obj
  @%append test.lk1 
  *wlink name test d all sys dos op m op maxe=25 op q op symf @test.lk1
 

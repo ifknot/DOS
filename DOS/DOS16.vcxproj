@@ -74,11 +74,14 @@
     <ClCompile Include="display.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="test_display.cpp" />
     <ClCompile Include="test_keyboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="display.h" />
+    <ClInclude Include="display_types.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="test_display.h" />
     <ClInclude Include="test_keyboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

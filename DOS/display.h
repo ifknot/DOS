@@ -1,6 +1,11 @@
 #pragma once
 
-namespace xt {
+#include <stdint.h>
+#include <vector>
+
+#include "display_types.h"
+
+namespace dos {
 
     /**
     * C98 Singleton pattern
@@ -11,7 +16,16 @@ namespace xt {
 
         static display& instance();
 
+        void mode(video_mode_t m);
+
+        video_state_t mode();
+
+        std::vector<bool>& modes();
+
+
     private:
+
+        std::vector<bool> modes_;
 
         display() {}
         display(display const&);

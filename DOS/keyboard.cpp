@@ -1,9 +1,8 @@
 #include "keyboard.h"
 
 #include <dos.h>
-#include <iostream>
 
-namespace xt {
+namespace dos {
 
     keyboard& keyboard::instance() {
         static keyboard k;

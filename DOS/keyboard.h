@@ -69,7 +69,7 @@
 #define INSERT          0x80
 
 
-namespace xt {
+namespace dos {
 
     /**
     * C98 Singleton pattern
