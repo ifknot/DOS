@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdint.h>
-#include <vector>
 
 #include "display_types.h"
 
@@ -20,8 +19,7 @@ namespace dos {
 
         video_state_t mode();
 
-        std::vector<bool> modes();
-
+        video_adapter_t adapter();
 
     private:
 

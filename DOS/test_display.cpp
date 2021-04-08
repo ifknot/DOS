@@ -6,12 +6,15 @@
 bool test_display() {
 	std::cout << "** test display ***\n";
 	dos::display& d = dos::display::instance();
+	d.adapter();
+	dos::video_state_t old = d.mode();
 	for (int m = 0; m < 16; ++m) {
 		std::getchar();
 		d.mode((dos::video_mode_t)m);
 		dos::video_state_t v = d.mode();
-		std::cout << (int)v.columns << ' ' << std::hex << (int)v.mode << ' ' << (int)v.page << '\n';
+		std::cout << std::dec << (int)v.columns << ' ' << std::hex << (int)v.mode << ' ' << (int)v.page << '\n';
 	}
-	
+	std::getchar();
+	d.mode(old.mode);
 	return true;
 }
