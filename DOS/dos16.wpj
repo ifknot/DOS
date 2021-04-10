@@ -4,10 +4,10 @@ projectIdent
 VpeMain
 1
 WRect
-604
-3712
-2664
-5504
+80
+1488
+3546
+7983
 2
 MProject
 3
@@ -30,7 +30,7 @@ VComponent
 WRect
 0
 0
-1708
+1706
 3072
 0
 0
@@ -39,5 +39,5 @@ WFileName
 8
 test.tgt
 0
-11
+16
 7
