@@ -1,13 +1,17 @@
 # DOS
 ![tiny xt](https://cldup.com/MWyAWo2qLY.png)
 
-DOS 16 bit Real Mode Software
+DOS 16 bit Real Mode Software written in C++98 and 8086 Assembly Language
 
 Built using [Open Watcom V2 Fork](https://open-watcom.github.io/)
 
 Written using [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
 
+Tested using [DOSBOX](https://www.dosbox.com/)
+
 ## Why DOS16?
+
+Having recently aquired a couple of IBM XT 5160 machines I was looking into the best way to create cross-compile software for this wonderful old machine and its kind.
 
 ## Licence
 
@@ -35,10 +39,28 @@ SOFTWARE.
 
 ## Usage
 
+Clone it, compile it, play with it...
+
 ## What is this repository for?
+
+My steep learning curve.
 
 ## How do I get setup?
 
-## Contribution guidlines
+Option 1: Run the executable files in DOSBOX our on your own old iron hardware.
+
+OPtion 2: Download and Install:
+
++ [Open Watcom V2 Fork](https://open-watcom.github.io/)
++ [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
++ [DOSBOX](https://www.dosbox.com/)
+
+Contribute
+
+## Contribution guidelines
+
+Fork it, do your thing and pull request
 
 ## Who do I talk to?
+
+Me :)
