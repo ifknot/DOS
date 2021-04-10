@@ -9,11 +9,9 @@ namespace dos {
     /**
     * C98 Singleton pattern
     * INT 11 - BIOS Equipment Determination / BIOS Equipment Flags
-
-	no input data
-
-	on return:
-	AX contains the following bit flags:
+    * no input data
+    * on return:
+    * AX contains the following bit flags:
 
 	|F|E|D|C|B|A|9|8|7|6|5|4|3|2|1|0|  AX
 	 | | | | | | | | | | | | | | | `---- IPL diskette installed
@@ -54,19 +52,13 @@ namespace dos {
 
         static equipment& instance();
 
-		bool detect(); // equipment flags
-
-		bool is_floppy_boot();
-
-		bool is_math_coprocessor();
+		bool detect(equipment_flags_t flags);
 
 		int boot_video_mode();
 
-		int floppy_drive_count();
+		int diskette_count();
 
 		int serial_device_count();
-
-		bool is_game_port();
 
 		int parallel_device_count();
 

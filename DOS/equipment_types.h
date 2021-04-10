@@ -40,6 +40,29 @@
 namespace dos {
 
 	/**
+	 * Equipment flags.
+	 F|E|D|C|B|A|9|8|7|6|5|4|3|2|1|0|  AX
+	 | | | | | | | | | | | | | | | `---- IPL diskette installed
+	 | | | | | | | | | | | | | | `----- math coprocessor
+	 | | | | | | | | | | | | `-------- old PC system board RAM < 256K
+	 | | | | | | | | | | | | | `----- pointing device installed (PS/2)
+	 | | | | | | | | | | | | `------ not used on PS/2
+	 | | | | | | | | | | `--------- initial video mode
+	 | | | | | | | | `------------ # of diskette drives, less 1
+	 | | | | | | | `------------- 0 if DMA installed
+	 | | | | `------------------ number of serial ports
+	 | | | `------------------- game adapter installed
+	 | | `-------------------- unused, internal modem (PS/2)
+	 `----------------------- number of printer ports
+	 */
+	enum equipment_flags_t {
+		DISKETTE_BOOT		= 0x1,
+		MATH_COPROCESSOR	= 0x2,
+		DMA_INSTALLED		= 0x100,
+		GAME_ADAPTER		= 0x800
+	};
+
+	/**
 	 * bits 5 & 4,  initial video mode
 	 * 00 - EGA,VGA,PGA, or other with on-board video BIOS
 	 * 01 - 40x25 color
@@ -53,7 +76,7 @@ namespace dos {
 		INIT_MONO_80x25
 	};
 
-	static char adapter_strings[4][255] = {
+	static char init_mode_strings[4][255] = {
 		"EGA,VGA,PGA, or other with on-board video BIOS",
 		"40x25 colour",
 		"80x25 colour",

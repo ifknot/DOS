@@ -168,7 +168,7 @@ namespace dos {
 		HGC,
 		HGC_PLUS,
 		HCG_INCOLOR,
-		OTHER
+		UNKNOWN
 	};
 
 	static char adapter_strings[10][255] = {

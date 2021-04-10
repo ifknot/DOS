@@ -7,4 +7,8 @@ namespace dos {
 		return e;
 	}
 
+	bool equipment::detect(equipment_flags_t flags) {
+		return false;
+	}
+
 }
