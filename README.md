@@ -3,11 +3,11 @@
 
 DOS 16 bit Real Mode Software written in C++98 and 8086 Assembly Language
 
-Built using [Open Watcom V2 Fork](https://open-watcom.github.io/)
-
 Written using [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
 
-Tested using [DOSBOX](https://www.dosbox.com/)
+Built using [Open Watcom V2 Fork](https://open-watcom.github.io/)
+
+Tested using [DOSBOX](https://www.dosbox.com/) and my IBM XT
 
 ## Why DOS16?
 
