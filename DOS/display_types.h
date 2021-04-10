@@ -1,23 +1,12 @@
-#pragma once
+//#pragma once
+#ifndef DISPLAY_TYPES_H
+#define DISPLAY_TYPES_H
 
 #include <stdint.h>
+#include <string>
+#include <vector>
 
 namespace dos {
-
-	/**
-	 * Types of video adapter.
-	 */
-	enum video_adapter_t {
-		MDA = 0,
-		HERC,
-		CGA,
-		EGA,
-		MONO,
-		COMPAQ,
-		PCJR,
-		VGA,
-		OTHER
-	};
 
 	/**
 	 * Video BIOS INT 10 video modes.
@@ -165,4 +154,42 @@ namespace dos {
 		uint8_t			page;
 	};
 
+	/**
+	 * Types of video adapter.
+	 */
+	enum video_adapter_t {
+		NONE = 0,
+		MDA,
+		CGA,
+		EGA,
+		MCGA,
+		VGA,
+		HGC,
+		HGC_PLUS,
+		HCG_INCOLOR,
+		OTHER
+	};
+
+	static char adapter_strings[10][255] = {
+		"None",
+		"MDA",
+		"CGA",
+		"EGA",
+		"MCGA",
+		"VGA",
+		"Hercules",
+		"Hercules Plus",
+		"Hercules InColor",
+		"Other"
+	};
+
+	/**
+	 * Video adapter information.
+	 */
+	struct video_adapter_info_t {
+		video_adapter_t type;
+	};
+
 }
+
+#endif	// DISPLAY_TYPES_H
