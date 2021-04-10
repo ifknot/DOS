@@ -3,6 +3,8 @@ DOS 16 bit Real Mode Software
 
 Built using [Open Watcom V2 Fork](https://open-watcom.github.io/)
 
+Written using [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
+
 ## Why DOS16?
 
 ## Licence
