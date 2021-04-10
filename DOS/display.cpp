@@ -100,7 +100,7 @@ namespace dos {
 		return CGA;
 	}
 
-	video_adapter_info_t display::adapter_info() {
+	video_adapter_info_t display::info() {
 		return video_adapter_info_t();
 	}
 

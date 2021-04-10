@@ -30,7 +30,7 @@ namespace dos {
 
         video_adapter_t detect_adapter();
 
-        video_adapter_info_t adapter_info();
+        video_adapter_info_t info();
 
     private:
 
