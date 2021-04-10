@@ -30,6 +30,12 @@
     <ClCompile Include="test_display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="equipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_equipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="keyboard.h">
@@ -45,6 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="display_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equipment_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test_equipment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
