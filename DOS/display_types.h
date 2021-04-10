@@ -8,7 +8,9 @@ namespace dos {
 	 * Types of video adapter.
 	 */
 	enum video_adapter_t {
-		CGA = 0,
+		MDA = 0,
+		HERC,
+		CGA,
 		EGA,
 		MONO,
 		COMPAQ,

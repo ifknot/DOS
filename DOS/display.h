@@ -17,7 +17,7 @@ namespace dos {
 
         void mode(video_mode_t m);
 
-        video_state_t mode();
+        video_state_t state();
 
         video_adapter_t adapter();
 

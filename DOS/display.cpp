@@ -17,7 +17,7 @@ namespace dos {
 		int86(0x10, &r, &r);
 	}
 
-	video_state_t display::mode() {
+	video_state_t display::state() {
 		video_state_t v;
 		union REGS r;
 		r.h.ah = GET_VIDEO_STATE;
