@@ -11,7 +11,7 @@ Tested using [DOSBOX](https://www.dosbox.com/) and my IBM XT
 
 ## Why DOS16?
 
-Having recently aquired a couple of IBM XT 5160 machines I was looking into the best way to create cross-compile software for this wonderful old machine and its kind.
+Having recently aquired a couple of IBM XT 5160 machines I was looking into the best way to create and cross-compile software for this wonderful old machine and its kind.
 
 ## Licence
 
@@ -54,8 +54,6 @@ OPtion 2: Download and Install:
 + [Open Watcom V2 Fork](https://open-watcom.github.io/)
 + [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
 + [DOSBOX](https://www.dosbox.com/)
-
-Contribute
 
 ## Contribution guidelines
 
