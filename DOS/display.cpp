@@ -75,14 +75,29 @@ namespace dos {
 	 * \return
 	 */
 	video_adapter_t display::detect_adapter() {
-		union REGS r;
-		r.h.ah = VIDEO_SUB_CONFIG;
-		r.h.bl = CONFIG_INFO;
-		int86(0x10, &r, &r);
-		if (r.h.bl == CONFIG_INFO) {
-			return CGA;
+		union REGS reg;
+		// detect VGA
+		reg.h.ah = VIDEO_SUB_CONFIG;
+		reg.h.bl = ACCESS_VIDEO_RAM;
+		reg.h.al = 0x00;	//enable CPU access to video RAM and I/O ports
+		int86(0x10, &reg, &reg);
+		if (reg.h.al == 0x12) {
+			return VGA;
 		}
-		return OTHER;
+		// detect EGA
+		reg.h.ah = VIDEO_SUB_CONFIG;
+		reg.h.bl = CONFIG_INFO;
+		int86(0x10, &reg, &reg);
+		if (reg.h.bl != CONFIG_INFO) {
+			return EGA;
+		}
+		// detect MDA
+		reg.h.ah = GET_VIDEO_STATE;
+		int86(0x10, &reg, &reg);
+		if (reg.h.al == TEXT_MONOCHROME_80X25) {
+			return MDA;
+		}
+		return CGA;
 	}
 
 	video_adapter_info_t display::adapter_info() {

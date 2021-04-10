@@ -81,7 +81,8 @@ namespace dos {
 	 * INT 10,12 - Video Subsystem Configuration (EGA/VGA).
 	 */
 	enum video_subsystem_t {
-		CONFIG_INFO = 0x10
+		CONFIG_INFO = 0x10,
+		ACCESS_VIDEO_RAM = 0x32
 	/*
 	BL = 10  return video configuration information
 	on return:

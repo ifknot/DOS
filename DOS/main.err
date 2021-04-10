@@ -1,2 +1,2 @@
 C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'adapter_strings'
-display_types.h(173): Note! N392: col(21) definition: 'char dos::adapter_strings[10][255]'
+display_types.h(174): Note! N392: col(21) definition: 'char dos::adapter_strings[10][255]'

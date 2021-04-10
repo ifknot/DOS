@@ -6,8 +6,8 @@
 bool test_display() {
 	std::cout << "*** test display ***\n";
 	dos::display& display = dos::display::instance();
-	std::cout << dos::adapter_strings[display.detect_adapter()]
-		<< display.detect_crtc();
+	std::cout << dos::adapter_strings[display.detect_adapter()] << '\n'
+		<< "crtc " << ((display.detect_crtc()) ?"yes" :"not") << " found\n";
 	dos::video_state_t old = display.video_state();
 	for (int m = 0; m < 16; ++m) {
 		std::getchar();
