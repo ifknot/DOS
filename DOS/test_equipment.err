@@ -1,2 +1,0 @@
-test_equipment.cpp(9): Warning! W014: col(0) no reference to symbol 'init_mode_strings'
-equipment_types.h(79): Note! N392: col(21) definition: 'char dos::init_mode_strings[4][255]'
