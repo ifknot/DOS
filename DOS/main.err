@@ -1,4 +1,0 @@
-C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'init_mode_strings'
-equipment_types.h(79): Note! N392: col(21) definition: 'char dos::init_mode_strings[4][255]'
-C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'adapter_strings'
-display_types.h(174): Note! N392: col(21) definition: 'char dos::adapter_strings[10][255]'
