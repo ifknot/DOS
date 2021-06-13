@@ -1,0 +1,16 @@
+!define BLANK ""
+C:\Users\ifkno\DOSBOX\DOS16\CODE\main.obj : C:\Users\ifkno\DOSBOX\DOS16\CODE&
+\main.cpp .AUTODEPEND
+ @C:
+ cd C:\Users\ifkno\DOSBOX\DOS16\CODE
+ *wpp main.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.obj -ml -x&
+s -xr
+
+C:\Users\ifkno\DOSBOX\DOS16\CODE\test.exe : C:\Users\ifkno\DOSBOX\DOS16\CODE&
+\main.obj .AUTODEPEND
+ @C:
+ cd C:\Users\ifkno\DOSBOX\DOS16\CODE
+ @%write test.lk1 FIL main.obj
+ @%append test.lk1 
+ *wlink name test d all sys dos op m op maxe=25 op q op symf @test.lk1
+
