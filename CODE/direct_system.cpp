@@ -1,8 +1,11 @@
 #include "direct_system.h"
 
 #include <stdint.h>
+#include <dos.h>
 
 namespace system {
+
+	using namespace dos;
 
 	bool detect_8087() {
         uint16_t status = 0xFF;
@@ -54,5 +57,31 @@ namespace system {
 		}
 		return (bool)found;
     }
+
+	dos::video_adapter_t get_video_adapter_type() {
+		union REGS reg;
+		// detect VGA
+		reg.h.ah = VIDEO_SUB_CONFIG;
+		reg.h.bl = ACCESS_VIDEO_RAM;
+		reg.h.al = 0x00;	//enable CPU access to video RAM and I/O ports
+		int86(0x10, &reg, &reg);
+		if (reg.h.al == 0x12) {
+			return VGA;
+		}
+		// detect EGA
+		reg.h.ah = VIDEO_SUB_CONFIG;
+		reg.h.bl = CONFIG_INFO;
+		int86(0x10, &reg, &reg);
+		if (reg.h.bl != CONFIG_INFO) {
+			return EGA;
+		}
+		// detect MDA
+		reg.h.ah = GET_VIDEO_STATE;
+		int86(0x10, &reg, &reg);
+		if (reg.h.al == TEXT_MONOCHROME_80X25) {
+			return MDA;
+		}
+		return CGA;
+	}
 
 }

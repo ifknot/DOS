@@ -170,7 +170,7 @@ namespace dos {
 		UNKNOWN
 	};
 
-	static char adapter_strings[10][255] = {
+	static char video_adapter_names[10][255] = {
 		"None",
 		"MDA",
 		"CGA",

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "display_types.h"
+
 namespace system {
 
 	/**
@@ -22,5 +24,18 @@ namespace system {
 	 * @return true if detected, otherwise false
 	 */
 	bool detect_crtc();
+
+	/**
+	 * Set AX=1200h, BL=32h and call INT 10.
+	 * If AL returns 12h, you have a VGA.
+	 * If not, set AH=12h, BL=10h and call INT 10 again.
+	 * If BL returns 0,1,2,3, you have an EGA with 64,128,192,256K memory.
+	 * If not, set AH=0Fh and call INT 10 a third time.
+	 * If AL is 7, you have an MDA (original monochrome adapter) or Hercules;
+	 * if not, you have a CGA..
+	 *
+	 * @return enum video_adapter_t
+	 */
+	dos::video_adapter_t get_video_adapter_type();
 
 }
