@@ -4,6 +4,8 @@
 
 namespace system {
 
+	using namespace dos;
+
 	/**
 	 * @brief Detect the presence of the Intel 8087 Numeric Processor Extension (NPX).
 	 * @note NB 1 The fwait opcode 9Bh occurs in all but 2 of the NPX instructions
@@ -37,5 +39,18 @@ namespace system {
 	 * @return enum video_adapter_t
 	 */
 	dos::video_adapter_t get_video_adapter_type();
+
+	/**
+	 * .
+	 * 
+	 * @param mode
+	 */
+	void set_video_mode(video_mode_t mode);
+
+	/**
+	 * .
+	 * @return struct video_state_t
+	 */
+	video_state_t get_video_state();
 
 }

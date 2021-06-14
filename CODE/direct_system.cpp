@@ -84,4 +84,22 @@ namespace system {
 		return CGA;
 	}
 
+	void set_video_mode(video_mode_t mode) {
+		union REGS r;
+		r.h.ah = SET_VIDEO_MODE;
+		r.h.al = mode;
+		int86(0x10, &r, &r);
+	}
+
+	video_state_t get_video_state() {
+		video_state_t v;
+		union REGS r;
+		r.h.ah = GET_VIDEO_STATE;
+		int86(0x10, &r, &r);
+		v.columns = r.h.ah;
+		v.mode = (video_mode_t)r.h.al;
+		v.page = r.h.bh;
+		return v;
+	}
+
 }
