@@ -1,4 +1,11 @@
 !define BLANK ""
+C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode6.obj : C:\Users\ifkno\DOSBOX\DO&
+S16\CODE\direct_mode6.cpp .AUTODEPEND
+ @C:
+ cd C:\Users\ifkno\DOSBOX\DOS16\CODE
+ *wpp direct_mode6.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.ob&
+j -ml -xs -xr
+
 C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.obj : C:\Users\ifkno\DOSBOX\D&
 OS16\CODE\direct_system.cpp .AUTODEPEND
  @C:
@@ -14,11 +21,13 @@ C:\Users\ifkno\DOSBOX\DOS16\CODE\main.obj : C:\Users\ifkno\DOSBOX\DOS16\CODE&
 s -xr
 
 C:\Users\ifkno\DOSBOX\DOS16\CODE\test.exe : C:\Users\ifkno\DOSBOX\DOS16\CODE&
-\direct_system.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\main.obj C:\Users\ifkno\&
-DOSBOX\DOS16\CODE\direct_system.h .AUTODEPEND
+\direct_mode6.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.obj C:\User&
+s\ifkno\DOSBOX\DOS16\CODE\main.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_m&
+ode6.h C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.h C:\Users\ifkno\DOSBO&
+X\DOS16\CODE\display_types.h .AUTODEPEND
  @C:
  cd C:\Users\ifkno\DOSBOX\DOS16\CODE
- @%write test.lk1 FIL direct_system.obj,main.obj
+ @%write test.lk1 FIL direct_mode6.obj,direct_system.obj,main.obj
  @%append test.lk1 
  *wlink name test d all sys dos op m op maxe=25 op q op symf @test.lk1
 

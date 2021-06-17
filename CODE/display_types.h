@@ -27,12 +27,11 @@ namespace dos {
 		GRAPHICS_16_COLOUR_320X200,			// 0D  320x200 16 color graphics (EGA,VGA)
 		GRAPHICS_16_COLOUR_640X200,			// 0E  640x200 16 color graphics (EGA,VGA)
 		GRAPHICS_MONOCHROME_640X350,		// 0F  640x350 Monochrome graphics (EGA,VGA)
+		GRAPHICS_16_COLOUR_640X350,			// 10  640x350 16 color graphics (EGA or VGA with 128K)
+		GRAPHICS_MONOCHROME_640X480,		// 11  640x480 B/W graphics (MCGA,VGA)
+		GRAPHICS_16_COLOUR_640X480,			// 12  640x480 16 color graphics (VGA)
+		GRAPHICS_256_COLOUR_320X200			// 13  320x200 256 color graphics (MCGA,VGA)
 		/*
-		10  640x350 16 color graphics (EGA or VGA with 128K)
-			 640x350 4 color graphics (64K EGA)
-		11  640x480 B/W graphics (MCGA,VGA)
-		12  640x480 16 color graphics (VGA)
-		13  320x200 256 color graphics (MCGA,VGA)
 		8x  EGA, MCGA or VGA ignore bit 7, see below
 		9x  EGA, MCGA or VGA ignore bit 7, see below
 
