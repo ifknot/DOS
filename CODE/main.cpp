@@ -13,9 +13,9 @@ int main() {
 
     std::cout << "display adapter = " << dos::video_adapter_names[system::get_video_adapter_type()] << '\n';
 
+    //
 
-
-    system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
+    //system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
 
     dos::video_state_t v = system::get_video_state();
 
