@@ -29,19 +29,9 @@ int main() {
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
    
     //std::getchar();
-
-    //mode6::plot2(0, 0);
-    //mode6::plot2(1, 1);
-    //mode6::plot2(2, 2);
-    //mode6::plot2(4, 3);
-    //mode6::plot2(5, 4);
-    //mode6::plot2(6, 5);
-    //mode6::plot2(7, 8);
-    //mode6::plot2(8, 9);
-    //mode6::plot2(100, 10);
     
     for (int i = 0; i < 100; ++i) {
-        mode6::plot2(i, i);
+        mode6::plot(i, i);
     }
 
     std::getchar();
