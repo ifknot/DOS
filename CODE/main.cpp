@@ -30,9 +30,19 @@ int main() {
    
     //std::getchar();
     
+    /*
     for (int i = 0; i < 100; ++i) {
         mode6::plot(i, i);
     }
+
+    std::getchar();
+
+    for (int i = 0; i < 100; i += 2) {
+        mode6::xor_plot(i, i);
+    }
+    */
+   
+    mode6::vline(10, 10, 100);
 
     std::getchar();
 
