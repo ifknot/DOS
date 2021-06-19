@@ -26,8 +26,8 @@ namespace mode6 {
 			and		ax, 0FFFEh		; remove even/odd row bit from y
 			mov		cx, ax			; copy modified y
 			shl		cx, 1			; offset of row in video memory
-			shl		cx, 1			; is y / 2 * 50h
-			add		cx, ax			; 80 bytes in each row
+			shl		cx, 1			; is y / 2 * 50h (80 bytes in each row)
+			add		cx, ax			; = y * 28h = y * 101000
 			shl		cx, 1			; but shifts and adds are about
 			shl		cx, 1			; 10 times faster than
 			shl		cx, 1			; multiply
@@ -57,16 +57,27 @@ namespace mode6 {
 
 			mov		ax, 0B800h	; even lines video buffer memory
 			mov		bx, y		; load y
-			and		bx, 01h		; is it an odd row?
+			test	bx, 01h		; is it an odd row?
 			jz		EVEN		; no keep even lines offset
 			mov		ax, 0BA00h	; odd lines video buffer memory
 	EVEN:	mov		es, ax		; offset into extended segment
-			mov		bx, x		; load x
-			mov		cx, bx		; copy x
+			mov		ax, x		
+			mov		cx, ax		; copy x
 			and		cx, 07h		; mask off 0111 lower bits
 			mov		dl, 080h	; load dl with 10000000
 			shr		dl, cl		; shift single bit along
-			mov		bx, 0
+			and		bx, 0FFFEh	; remove even / odd row bit from y
+			// row	= y/2 * 80 bytes per row
+			//		= y * 40
+			//		= y * 0x28
+			//		= y * 101000 = 3 shl, add, 2 shl, add
+			shl		bx, 1
+			shl		bx, 1
+			shl		bx, 1
+			mov		cx, bx
+			shl		cx, 1
+			shl		cx, 1
+			add		bx, cx
 			or		es:[bx], dl
 
 			pop es

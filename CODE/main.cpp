@@ -30,18 +30,19 @@ int main() {
    
     //std::getchar();
 
-    mode6::plot2(0, 100);
-    mode6::plot2(1, 101);
-    mode6::plot2(2, 100);
-    mode6::plot2(3, 101);
-    mode6::plot2(4, 100);
-    mode6::plot2(5, 101);
-    mode6::plot2(6, 100);
-    mode6::plot2(7, 101);
+    //mode6::plot2(0, 0);
+    //mode6::plot2(1, 1);
+    //mode6::plot2(2, 2);
+    //mode6::plot2(4, 3);
+    //mode6::plot2(5, 4);
+    //mode6::plot2(6, 5);
+    //mode6::plot2(7, 8);
+    //mode6::plot2(8, 9);
+    //mode6::plot2(100, 10);
     
-    mode6::plot(308, 101);
-    mode6::plot(316, 100);
-    mode6::plot(332, 101);
+    for (int i = 0; i < 100; ++i) {
+        mode6::plot2(i, i);
+    }
 
     std::getchar();
 
