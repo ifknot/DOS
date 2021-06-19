@@ -22,6 +22,6 @@ namespace mode6 {
 	/**
 	 * fast horizontal line
 	 */
-	//void hline(uint16_t x1, uint16_t x2, uint16_t y);
+	void hline(uint16_t x1, uint16_t x2, uint16_t y);
 
 }
