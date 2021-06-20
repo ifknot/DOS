@@ -28,7 +28,7 @@ int main() {
 
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
    
-    //std::getchar();
+    std::getchar();
     
     /*
     for (int i = 0; i < 100; ++i) {
@@ -50,6 +50,19 @@ int main() {
         mode6::xor_vline(i, 0, 199);
     }
     */
+
+    mode6::hline(0, 100, 10);
+    mode6::hline(1, 100, 11);
+    mode6::hline(2, 100, 12);
+    mode6::hline(3, 100, 13);
+    mode6::hline(4, 100, 14);
+    mode6::hline(5, 100, 15);
+    mode6::hline(6, 100, 16);
+    mode6::hline(7, 100, 17);
+    mode6::hline(8, 100, 18);
+    mode6::hline(9, 100, 19);
+    mode6::hline(10, 100, 20);
+
 
     std::getchar();
 
