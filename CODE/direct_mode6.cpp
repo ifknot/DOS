@@ -285,18 +285,25 @@ namespace mode6 {
 			add		bx, cx		; add back into bx
 			add		bx, ax		; add in column byte
 			// if x2- x1 < 8 jmp plot right (the line fits inside 1 byte)
-			mov		ax, x2
-			sub		ax, x1
-			cmp		ax, 8
-			jl		RIGHT
+			mov		cx, x2
+			sub		cx, x1
+			cmp		cx, 8
+			jl		LEFT
 			or		es:[bx], dl	; plot left most byte
-			inc		bx			; point to next byte along
 			mov		dl, 0FFh	; load a full byte horizontal line
 			// if x2 - x1 < 16 jmp plot right (the line fits inside 2 bytes)
-			cmp		ax, 16
+			cmp		cx, 16
 			jl		RIGHT
+			shr		cx, 1		; divide by 8 
+			shr		cx, 1
+			shr		cx, 1
+			dec		cx
+	FILL:	inc		bx			; point to next byte along
+			or		es:[bx], dl ; plot filler byte
+			loop	FILL
 			// construct the right most byte
-	RIGHT:	mov		cx, 07h		; load cx with 0000000000000111
+	RIGHT:	inc		bx
+	LEFT:	mov		cx, 07h		; load cx with 0000000000000111
 			sub		cx, x2		; subtract x2
 			and		cl, 07h		; mask off 0111 lower bits(mod 8)
 			mov		dh, 0FFh	; load dh with 1111111

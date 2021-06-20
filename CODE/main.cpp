@@ -60,16 +60,23 @@ int main() {
     mode6::hline(0, 6, 15);
     mode6::hline(0, 7, 16);
     mode6::hline(0, 8, 17);
-    mode6::hline(1, 9, 18);
-    mode6::hline(2, 10, 19);
-    mode6::hline(3, 11, 20);
-    mode6::hline(4, 12, 21);
-    mode6::hline(5, 13, 22);
-    mode6::hline(6, 14, 23);
-    mode6::hline(7, 15, 24);
-    mode6::hline(0, 16, 25);
-    mode6::hline(0, 17, 26);
-    mode6::hline(0, 18, 27);
+    mode6::hline(0, 9, 18);
+    mode6::hline(0, 10, 19);
+    mode6::hline(0, 11, 20);
+    mode6::hline(0, 12, 21);
+    mode6::hline(0, 13, 22);
+
+   // mode6::hline(1, 9, 18);
+    //mode6::hline(2, 10, 19);
+    //mode6::hline(3, 11, 20);
+    //mode6::hline(4, 12, 21);
+    //mode6::hline(5, 13, 22);
+    //mode6::hline(6, 14, 23);
+    //mode6::hline(7, 15, 24);
+    
+    for (uint16_t i = 1; i < 100; ++i) {
+        //mode6::hline(0, i, 24 + i);
+    }
 
 
     std::getchar();
