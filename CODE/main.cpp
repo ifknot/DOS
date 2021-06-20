@@ -51,17 +51,25 @@ int main() {
     }
     */
 
-    mode6::hline(0, 100, 10);
-    mode6::hline(1, 100, 11);
-    mode6::hline(2, 100, 12);
-    mode6::hline(3, 100, 13);
-    mode6::hline(4, 100, 14);
-    mode6::hline(5, 100, 15);
-    mode6::hline(6, 100, 16);
-    mode6::hline(7, 100, 17);
-    mode6::hline(8, 100, 18);
-    mode6::hline(9, 100, 19);
-    mode6::hline(10, 100, 20);
+    mode6::plot(0, 9);
+    mode6::hline(0, 1, 10);
+    mode6::hline(0, 2, 11);
+    mode6::hline(0, 3, 12);
+    mode6::hline(0, 4, 13);
+    mode6::hline(0, 5, 14);
+    mode6::hline(0, 6, 15);
+    mode6::hline(0, 7, 16);
+    mode6::hline(0, 8, 17);
+    mode6::hline(1, 9, 18);
+    mode6::hline(2, 10, 19);
+    mode6::hline(3, 11, 20);
+    mode6::hline(4, 12, 21);
+    mode6::hline(5, 13, 22);
+    mode6::hline(6, 14, 23);
+    mode6::hline(7, 15, 24);
+    mode6::hline(0, 16, 25);
+    mode6::hline(0, 17, 26);
+    mode6::hline(0, 18, 27);
 
 
     std::getchar();

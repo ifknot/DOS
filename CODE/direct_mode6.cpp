@@ -284,14 +284,23 @@ namespace mode6 {
 			shl		cx, 1
 			add		bx, cx		; add back into bx
 			add		bx, ax		; add in column byte
-
+			// if x2- x1 < 8 jmp plot right (the line fits inside 1 byte)
+			mov		ax, x2
+			sub		ax, x1
+			cmp		ax, 8
+			jl		RIGHT
+			or		es:[bx], dl	; plot left most byte
+			inc		bx
 			// construct the right most byte
-			mov		cx, x2		; copy x2
-			and		cx, 07h		; mask off 0111 lower bits(mod 8)
-			mov		dl, 0FFh	; load dl with 1111111
-			shr		dl, cl		; shift single bit along by x mod 8
+			mov		dl, 0FFh
+	RIGHT:	mov		cx, 07h		; load cx with 0000000000000111
+			sub		cx, x2		; subtract x2
+			and		cl, 07h		; mask off 0111 lower bits(mod 8)
+			mov		dh, 0FFh	; load dh with 1111111
+			shl		dh, cl		; shift x2 mod 8
+			and		dl, dh		; mask off dl
 			// plot the right most byte
-			xor		es:[bx], dl	; set pixel bit in video buffer
+			or		es:[bx], dl	; set pixel bit in video buffer
 
 	END:	pop es
 			pop	dx
