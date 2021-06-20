@@ -34,8 +34,8 @@ void slo_box(uint16_t x, uint16_t y, uint16_t w) {
 int main() {
 
     std::cout << "*** test harness ***\n\n";
-    
-    std::cout << "detect npx = " << (system::detect_8087() ?"yes" :"no") << '\n';
+
+    std::cout << "detect npx = " << (system::detect_8087() ? "yes" : "no") << '\n';
 
     std::cout << "detect crtc = " << (system::detect_crtc() ? "yes" : "no") << '\n';
 
@@ -43,7 +43,7 @@ int main() {
 
     dos::video_state_t v = system::get_video_state();
 
-    std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
+    std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
 
     std::getchar();
 
@@ -53,20 +53,25 @@ int main() {
     v = system::get_video_state();
 
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
-   
+
     std::getchar();
-    
-    for (uint16_t i = 0; i < 189; i += 11) {
-        //if (i % 2 == 0) {
-            box(i + 5, i, 11);
-        //}
+
+    for (uint16_t j = 1; j < 10; j += 2) {
+        for (uint16_t i = 0; i < 189; i += 11) {
+            //if (i % 2 == 0) {
+            box(i + 5, i, j);
+            //}
+        }
     }
-    
-    for (uint16_t i = 0; i < 189; i += 11) {
-        //if (i % 2 == 0) {
-            slo_box(i + 30, i, 11);
-        //}
+    for (uint16_t j = 1; j < 10; j += 2) {
+        for (uint16_t i = 0; i < 189; i += 11) {
+            //if (i % 2 == 0) {
+            slo_box(i + 30, i, j);
+            //}
+        }
     }
+
+    mode6::plot(0,0);
 
     std::getchar();
 
