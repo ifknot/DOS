@@ -12,6 +12,25 @@ void box(uint16_t x, uint16_t y, uint16_t w) {
     mode6::vline(x + w, y, y + w);
 }
 
+void slo_vline(uint16_t x, uint16_t y1, uint16_t y2) {
+    for (uint16_t i = 0; i <= y2 - y1; ++i) {
+        mode6::plot(x, y1 + i);
+    }
+}
+
+void slo_hline(uint16_t x1, uint16_t x2, uint16_t y) {
+    for (uint16_t i = 0; i <= x2 - x1; ++i) {
+        mode6::plot(x1 + i, y);
+    }
+}
+
+void slo_box(uint16_t x, uint16_t y, uint16_t w) {
+    slo_hline(x, x + w, y);
+    slo_hline(x, x + w, y + w);
+    slo_vline(x, y, y + w);
+    slo_vline(x + w, y, y + w);
+}
+
 int main() {
 
     std::cout << "*** test harness ***\n\n";
@@ -37,36 +56,17 @@ int main() {
    
     std::getchar();
     
-    /*
-    for (int i = 0; i < 100; ++i) {
-        mode6::plot(i, i);
+    for (uint16_t i = 0; i < 189; i += 11) {
+        //if (i % 2 == 0) {
+            box(i + 5, i, 11);
+        //}
     }
-
-    std::getchar();
-
-    for (int i = 0; i < 100; i += 2) {
-        mode6::xor_plot(i, i);
-    }
-    */
-   /*
-    for (int i = 0; i < 640; i += 1) {
-        mode6::vline(i, 0, 199);
-    }
-
-    for (int i = 0; i < 640; i += 2) {
-        mode6::xor_vline(i, 0, 199);
-    }
-    */
-
     
-    for (uint16_t i = 0; i < 10; ++i) {
-        //box(i, i, (i + 1) * 10);
+    for (uint16_t i = 0; i < 189; i += 11) {
+        //if (i % 2 == 0) {
+            slo_box(i + 30, i, 11);
+        //}
     }
-
-    box(1, 1, 11);
-    box(14, 14, 22);
-
-
 
     std::getchar();
 

@@ -118,11 +118,12 @@ namespace mode6 {
 
 			// starting page odd/even
 			mov		ax, 0B800h	; even lines video buffer memory
-			mov		bx, y1		; load y
+			mov		bx, y1		; load y1
 			test	bx, 01h		; is it an odd row?
-			jz		EVEN		; no keep even lines offset
+			pushf				; preserve odd/even state
+			jz		KEEP		; no keep even lines offset
 			mov		ax, 0BA00h	; odd lines video buffer memory
-	EVEN:	mov		es, ax		; offset into extended segment
+	KEEP:	mov		es, ax		; offset into extended segment
 			// dl pixel bit
 			mov		ax, x		; load x
 			mov		cx, ax		; copy x
@@ -147,11 +148,27 @@ namespace mode6 {
 			add		bx, cx		; add back into bx
 			add		bx, ax		; add in column byte
 			or		es:[bx], dl	; set pixel bit in video buffer
-			// plot vertical points
 			mov		cx, y2		
 			sub		cx, y1		; cx is line length
-			jz		END			; y1 == y2 line is 1 pixel 
-	PLOT:	mov		ax, es
+			popf				; retrieve odd/even state
+			jz		EVEN
+			// plot vertical points starting in odd segment
+			add		bx, 50h; increment bx to next row
+	ODD:	mov		ax, es
+			xor		ax, 200h	; swap to opposite row video buffer
+			mov		es, ax
+			or		es:[bx], dl ; set pixel bit in video buffer
+			dec		cx
+			jz		END
+			mov		ax, es
+			xor		ax, 200h	; swap to opposite row video buffer
+			mov		es, ax
+			or		es:[bx], dl	; set pixel bit in video buffer
+			add		bx, 50h; increment bx to next row
+			loop	ODD
+			jmp		END
+
+	EVEN:	mov		ax, es
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax
 			or		es:[bx], dl ; set pixel bit in video buffer
@@ -162,7 +179,7 @@ namespace mode6 {
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax
 			or		es:[bx], dl	; set pixel bit in video buffer
-			loop	PLOT
+			loop	EVEN
 
 	END:	pop es
 			pop	dx
