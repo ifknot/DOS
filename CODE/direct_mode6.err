@@ -1,0 +1,6 @@
+direct_mode6.cpp(249): Warning! W726: col(9) no reference to formal parameter 'x1'
+direct_mode6.cpp(241): Note! N392: col(29) definition: 'unsigned short x1' in 'void mode6::hline( unsigned short, unsigned short, unsigned short )'
+direct_mode6.cpp(249): Warning! W726: col(9) no reference to formal parameter 'x2'
+direct_mode6.cpp(241): Note! N392: col(42) definition: 'unsigned short x2' in 'void mode6::hline( unsigned short, unsigned short, unsigned short )'
+direct_mode6.cpp(249): Warning! W726: col(9) no reference to formal parameter 'y'
+direct_mode6.cpp(241): Note! N392: col(55) definition: 'unsigned short y' in 'void mode6::hline( unsigned short, unsigned short, unsigned short )'

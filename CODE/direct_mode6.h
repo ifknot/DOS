@@ -20,6 +20,11 @@ namespace mode6 {
 	void vline(uint16_t x, uint16_t y1, uint16_t y2);
 
 	/**
+	 * fast xor vertical line
+	 */
+	void xor_vline(uint16_t x, uint16_t y1, uint16_t y2);
+
+	/**
 	 * fast horizontal line
 	 */
 	void hline(uint16_t x1, uint16_t x2, uint16_t y);

@@ -41,8 +41,15 @@ int main() {
         mode6::xor_plot(i, i);
     }
     */
-   
-    mode6::vline(10, 10, 100);
+   /*
+    for (int i = 0; i < 640; i += 1) {
+        mode6::vline(i, 0, 199);
+    }
+
+    for (int i = 0; i < 640; i += 2) {
+        mode6::xor_vline(i, 0, 199);
+    }
+    */
 
     std::getchar();
 
