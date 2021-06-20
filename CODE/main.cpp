@@ -51,6 +51,7 @@ int main() {
     }
     */
 
+    /*
     mode6::plot(0, 9);
     mode6::hline(0, 1, 10);
     mode6::hline(0, 2, 11);
@@ -65,7 +66,7 @@ int main() {
     mode6::hline(0, 11, 20);
     mode6::hline(0, 12, 21);
     mode6::hline(0, 13, 22);
-
+    */
    // mode6::hline(1, 9, 18);
     //mode6::hline(2, 10, 19);
     //mode6::hline(3, 11, 20);
@@ -74,9 +75,15 @@ int main() {
     //mode6::hline(6, 14, 23);
     //mode6::hline(7, 15, 24);
     
-    for (uint16_t i = 1; i < 100; ++i) {
-        //mode6::hline(0, i, 24 + i);
-    }
+    int x = 10, y = 0;
+    //for (uint16_t j = 0; j < x; ++j) {
+        for (uint16_t i = 1; i < 10; ++i) {
+            mode6::hline(i, i + 3, y);
+            ++y;
+        }
+    //}
+
+
 
 
     std::getchar();
