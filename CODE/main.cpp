@@ -5,6 +5,13 @@
 #include "direct_system.h"
 #include "direct_mode6.h"
 
+void box(uint16_t x, uint16_t y, uint16_t w) {
+    mode6::hline(x, x + w, y);
+    mode6::hline(x, x + w, y + w);
+    mode6::vline(x, y, y + w);
+    mode6::vline(x + w, y, y + w);
+}
+
 int main() {
 
     std::cout << "*** test harness ***\n\n";
@@ -51,38 +58,13 @@ int main() {
     }
     */
 
-    /*
-    mode6::plot(0, 9);
-    mode6::hline(0, 1, 10);
-    mode6::hline(0, 2, 11);
-    mode6::hline(0, 3, 12);
-    mode6::hline(0, 4, 13);
-    mode6::hline(0, 5, 14);
-    mode6::hline(0, 6, 15);
-    mode6::hline(0, 7, 16);
-    mode6::hline(0, 8, 17);
-    mode6::hline(0, 9, 18);
-    mode6::hline(0, 10, 19);
-    mode6::hline(0, 11, 20);
-    mode6::hline(0, 12, 21);
-    mode6::hline(0, 13, 22);
-    */
-   // mode6::hline(1, 9, 18);
-    //mode6::hline(2, 10, 19);
-    //mode6::hline(3, 11, 20);
-    //mode6::hline(4, 12, 21);
-    //mode6::hline(5, 13, 22);
-    //mode6::hline(6, 14, 23);
-    //mode6::hline(7, 15, 24);
     
-    int x = 50, y = 0;
-    for (uint16_t j = 1; j < 20; ++j) {
-        for (uint16_t i = 1; i < 10; ++i) {
-            mode6::hline(i, x + i + j, y);
-            ++y;
-        }
+    for (uint16_t i = 0; i < 10; ++i) {
+        //box(i, i, (i + 1) * 10);
     }
 
+    box(1, 1, 11);
+    box(14, 14, 22);
 
 
 
