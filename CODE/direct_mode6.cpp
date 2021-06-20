@@ -284,19 +284,19 @@ namespace mode6 {
 			shl		cx, 1
 			add		bx, cx		; add back into bx
 			add		bx, ax		; add in column byte
-			// figure out if fit in a single byte? (x1 % 8) + x2 - x1 < 8?
+			// line length fit in a single byte? (x1 % 8) + x2 - x1 < 8?
 			mov		cx, x1		; load x1
 			and		cx, 07h		; mod 8
 			add		cx, x2
 			sub		cx, x1
 
 			cmp		cx, 08h
-			jl		LEFT
+			jl		LEFT		; only plot left byte
 			or		es:[bx], dl	; plot left most byte
 			mov		dl, 0FFh	; load a full byte horizontal line
-			// if x2 - x1 < 16 jmp plot right (the line fits inside 2 bytes)
+			// line length overlap 2 bytes? (x1 % 8) + x2 - x1 < 16?
 			cmp		cx, 10h
-			jl		RIGHT
+			jl		RIGHT		; plot right most byte as well
 			shr		cx, 1		; divide by 8 
 			shr		cx, 1
 			shr		cx, 1

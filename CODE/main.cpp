@@ -75,13 +75,13 @@ int main() {
     //mode6::hline(6, 14, 23);
     //mode6::hline(7, 15, 24);
     
-    int x = 10, y = 0;
-    //for (uint16_t j = 0; j < x; ++j) {
+    int x = 50, y = 0;
+    for (uint16_t j = 1; j < 20; ++j) {
         for (uint16_t i = 1; i < 10; ++i) {
-            mode6::hline(i, i + 3, y);
+            mode6::hline(i, x + i + j, y);
             ++y;
         }
-    //}
+    }
 
 
 
