@@ -290,9 +290,12 @@ namespace mode6 {
 			cmp		ax, 8
 			jl		RIGHT
 			or		es:[bx], dl	; plot left most byte
-			inc		bx
+			inc		bx			; point to next byte along
+			mov		dl, 0FFh	; load a full byte horizontal line
+			// if x2 - x1 < 16 jmp plot right (the line fits inside 2 bytes)
+			cmp		ax, 16
+			jl		RIGHT
 			// construct the right most byte
-			mov		dl, 0FFh
 	RIGHT:	mov		cx, 07h		; load cx with 0000000000000111
 			sub		cx, x2		; subtract x2
 			and		cl, 07h		; mask off 0111 lower bits(mod 8)
