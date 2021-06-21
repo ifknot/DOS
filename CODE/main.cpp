@@ -2,10 +2,12 @@
 #include <iomanip>
 #include <cstdio>
 
+
 #include "direct_system.h"
 #include "direct_mode6.h"
+#include "random.h"
 
-void box(uint16_t x, uint16_t y, uint16_t w) {
+void cbox(uint16_t x, uint16_t y, uint16_t w) {
     mode6::hline(x, x + w, y);
     mode6::hline(x, x + w, y + w);
     mode6::vline(x, y, y + w);
@@ -72,7 +74,12 @@ int main() {
     }
     */
 
-    mode6::bline(10, 10, 100, 100);
+    mode6::bline(0, 0, 639, 199);
+    mode6::bline(0, 199, 639, 0);
+
+    //for (int i = 0; i < 100; ++i) {
+       // mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
+    //}
 
     std::getchar();
 

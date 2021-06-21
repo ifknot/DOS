@@ -433,11 +433,21 @@ namespace mode6 {
 
 	void bline(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
 		int16_t dx, dy, p, x, y;
+		if (x0 > x1) {
+			x = x1;
+			x1 = x0;
+			x0 = x;
+		}
+		if (y0 > y1) {
+			y = y1;
+			y1 = y0;
+			y0 = y;
+		}
 		dx = x1 - x0;
 		dy = y1 - y0;
 		x = x0;
 		y = y0;
-		p = 2 * dy - dx;
+		p = (dy - dx) >> 1;
 		while (x < x1)
 		{
 			if (p >= 0)
@@ -453,6 +463,10 @@ namespace mode6 {
 			}
 			x = x + 1;
 		}
+	}
+
+	void box(uint16_t x, uint16_t y, uint16_t w, uint16_t h) {
+
 	}
 
 }
