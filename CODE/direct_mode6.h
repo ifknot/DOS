@@ -29,7 +29,7 @@ namespace mode6 {
 	 */
 	void hline(uint16_t x1, uint16_t x2, uint16_t y);
 
-	//void xor_hline(uint16_t x1, uint16_t x2, uint16_t y);
+	void xor_hline(uint16_t x1, uint16_t x2, uint16_t y);
 
 	//void bresenham_line(uint16_t x1, uint16_t y1, uint16_t x2, unint16_t y2);
 
