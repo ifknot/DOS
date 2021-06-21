@@ -431,5 +431,29 @@ namespace mode6 {
 		}
 	}
 
+	void bline(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
+		int16_t dx, dy, p, x, y;
+		dx = x1 - x0;
+		dy = y1 - y0;
+		x = x0;
+		y = y0;
+		p = 2 * dy - dx;
+		while (x < x1)
+		{
+			if (p >= 0)
+			{
+				plot((uint16_t)x, (uint16_t)y);
+				y = y + 1;
+				p = p + 2 * dy - 2 * dx;
+			}
+			else
+			{
+				plot((uint16_t)x, (uint16_t)y);
+				p = p + 2 * dy;
+			}
+			x = x + 1;
+		}
+	}
+
 }
 

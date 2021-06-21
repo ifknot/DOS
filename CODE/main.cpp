@@ -55,7 +55,7 @@ int main() {
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
 
     std::getchar();
-
+    /*
     for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
@@ -70,8 +70,9 @@ int main() {
             //}
         }
     }
+    */
 
-    mode6::plot(0,0);
+    mode6::bline(10, 10, 100, 100);
 
     std::getchar();
 
