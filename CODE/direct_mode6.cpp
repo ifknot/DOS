@@ -2,6 +2,58 @@
 
 #include <cassert>
 
+#define macro_plot	\
+					mov		ax, 0B800h	\
+					mov		bx, y \
+					test	bx, 01h \
+					jz		EVEN \
+					mov		ax, 0BA00h \
+			EVEN :	mov		es, ax \
+					mov		ax, x \
+					mov		cx, ax \
+					and		cx, 07h \
+					mov		dl, 080h \
+					shr		dl, cl \
+					shr		ax, 1 \
+					shr		ax, 1 \
+					shr		ax, 1 \
+					and		bx, 0FFFEh \
+					shl		bx, 1 \
+					shl		bx, 1 \
+					shl		bx, 1 \
+					mov		cx, bx \
+					shl		cx, 1 \
+					shl		cx, 1 \
+					add		bx, cx \
+					add		bx, ax \
+					or es: [bx] , dl
+
+#define macro_xor_plot	\
+					mov		ax, 0B800h	\
+					mov		bx, y \
+					test	bx, 01h \
+					jz		EVEN \
+					mov		ax, 0BA00h \
+			EVEN :	mov		es, ax \
+					mov		ax, x \
+					mov		cx, ax \
+					and		cx, 07h \
+					mov		dl, 080h \
+					shr		dl, cl \
+					shr		ax, 1 \
+					shr		ax, 1 \
+					shr		ax, 1 \
+					and		bx, 0FFFEh \
+					shl		bx, 1 \
+					shl		bx, 1 \
+					shl		bx, 1 \
+					mov		cx, bx \
+					shl		cx, 1 \
+					shl		cx, 1 \
+					add		bx, cx \
+					add		bx, ax \
+					xor es: [bx] , dl
+
 namespace mode6 {
 
 	void plot(uint16_t x, uint16_t y) {
@@ -65,33 +117,7 @@ namespace mode6 {
 			push	dx
 			push    es
 
-			mov		ax, 0B800h	; even lines video buffer memory
-			mov		bx, y		; load y
-			test	bx, 01h		; is it an odd row?
-			jz		EVEN		; no keep even lines offset
-			mov		ax, 0BA00h	; odd lines video buffer memory
-	EVEN:	mov		es, ax		; offset into extended segment
-			
-			mov		ax, x		; load x
-			mov		cx, ax		; copy x
-			and		cx, 07h		; mask off 0111 lower bits (mod 8)
-			mov		dl, 080h	; load dl with 10000000
-			shr		dl, cl		; shift single bit along by x mod 8
-			
-			shr		ax, 1		; 8086 shift right 3 times
-			shr		ax, 1
-			shr		ax, 1
-			
-			and		bx, 0FFFEh	; remove even / odd row bit from y
-			shl		bx, 1		; 8086 shift left 3 time
-			shl		bx, 1
-			shl		bx, 1
-			mov		cx, bx		; put result in cx
-			shl		cx, 1		; 8086 shift left twice
-			shl		cx, 1
-			add		bx, cx		; add back into bx
-			add		bx, ax		; add in column byte
-			xor		es:[bx], dl	; set pixel bit in video buffer
+			macro_xor_plot
 
 			pop es
 			pop	dx

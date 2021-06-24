@@ -1,0 +1,3 @@
+direct_mode6.cpp(64): Error! E605: col(25) assembler: 'Invalid instruction with current CPU setting'
+direct_mode6.cpp(121): Error! E605: col(25) assembler: 'Too many tokens in a line'
+direct_mode6.cpp(121): Error! E605: col(25) assembler: 'Too many commas'
