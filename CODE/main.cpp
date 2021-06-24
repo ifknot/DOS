@@ -57,24 +57,24 @@ int main() {
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
 
     std::getchar();
-    /*
+    
     for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
-            box(i + 5, i, j);
+            cbox(i + 30, i, j);
             //}
         }
     }
-    */
-    /*
+    
+    
     for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
-            slo_box(i + 30, i, j);
+            slo_box(i + 55, i, j);
             //}
         }
     }
-    */
+    
     //mode6::bline(0, 0, 199, 199);
     //mode6::bline(0, 0, 0, 199);
     //mode6::bline(0, 0, 25, 199);
