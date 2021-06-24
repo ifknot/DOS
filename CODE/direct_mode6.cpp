@@ -442,54 +442,54 @@ namespace mode6 {
 			push    di
 
 			// calculate deltas, steps and distance limits
-			mov		bx, x1		; load starting point x
-			mov		ax, y1		; load starting point y
+			mov		ax, x1		; load starting point x
+			mov		bx, y1		; load starting point y
 			// is it a positive or negative x direction?
 			mov		step_x, -1	; assume -ve x direction
-			sub		bx, x2		; calculate delta x
+			sub		ax, x2		; calculate delta x
 			jge		NEGX		; yes -ve x direction so calculate y direction
-			neg		bx			; abs(delta x)
-			mov		step_x,	1	; +ve x direction
+			neg		ax			; abs(delta x)
+			neg		step_x		; +ve x direction
 			// is it a positive or negative y direction?
-	NEGX:	mov		delta_x, bx	; store delta x
+	NEGX:	mov		delta_x, ax	; store delta x
 			mov		step_y, -1	; assume -ve y direction
-			sub		ax, y2		; calculate delta y
+			sub		bx, y2		; calculate delta y
 			jge		NEGY		; yes -ve y direction
-			neg		ax			; abs(delta y)
-			mov		step_y, 1	; +ve y direction
+			neg		bx			; abs(delta y)
+			neg		step_y		; +ve y direction
 	NEGY:	mov		delta_y, bx	; store delta y
 			// delta x in bx, delta y in ax
-			inc		bx
-			mov		cx, bx		; save x repeat count
-			shr		bx, 1		; i1 = -delta_y + (delta_x + 1) div 2
-			sub		bx, ax
-			mov		i1, bx		; store i1
 			inc		ax
-			mov		dx, ax		; save y repeat count
-			shr		ax, 1		; i2 = delta_x - (delta_y + 1) div 2
-			sub		ax, cx		; adjust possible repeate count
-			inc		ax			
-			neg		ax
-			mov		i2, ax		; store i1
+			mov		cx, ax		; save x repeat count
+			shr		ax, 1		; i1 = -delta_y + (delta_x + 1) div 2
+			sub		ax, bx
+			mov		i1, ax		; store i1
+			inc		bx
+			mov		dx, bx		; save y repeat count
+			shr		bx, 1		; i2 = delta_x - (delta_y + 1) div 2
+			sub		bx, cx		; adjust possible repeate count
+			inc		bx			
+			neg		bx
+			mov		i2, bx		; store i1
 			cmp		cx, dx		; repeat count max(delta_x + 1, delta_y + 1)
 			jge		BIGX		; delta_x is bigger
 			mov		cx, dx		; delta_y is bigger
 			// assume distance limit decision variable D = 0 and x,y start point
-	BIGX:	mov		bx, x1
-			mov		ax, y1
-			mov		di, 0		; zero D
+	BIGX:	mov		ax, x1
+			mov		bx, y1
+			xor		di, di		; zero D
 			jmp		BPLOT		; plot the first point
 	MORE:	mov		dx, di		; load decision variable D
 			cmp		dx, i1
 			jl		HZ			; D too -ve so must be horizontal
-			add		ax, step_y	; vertical step
+			add		bx, step_y	; vertical step
 			sub		dx, delta_x ; update decision variable D - delta_x
 			cmp		di, i2		; check old D diagonal move
 			jg		NDIAG		; no horizontal only
-	HZ:		add		bx, step_x	; x = x + step_x
+	HZ:		add		ax, step_x	; x = x + step_x
 			add		dx, delta_y ; update decision variable D + delta_y
 	NDIAG:	mov		di, dx		; store D
-			// inline plot pixel (x,y) as (bx,ax)
+			// inline plot pixel (x,y) as (ax,bx)
 	BPLOT:	push	ax
 			push	bx
 			push	cx
