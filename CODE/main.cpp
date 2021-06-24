@@ -75,16 +75,16 @@ int main() {
         }
     }
     */
-    mode6::bline(0, 0, 199, 199);
-    mode6::bline(0, 0, 0, 199);
-    mode6::bline(0, 0, 25, 199);
-    mode6::bline(0, 0, 50, 199);
-    mode6::bline(0, 0, 199, 0);
+    //mode6::bline(0, 0, 199, 199);
+    //mode6::bline(0, 0, 0, 199);
+    //mode6::bline(0, 0, 25, 199);
+    //mode6::bline(0, 0, 50, 199);
+    //mode6::bline(0, 0, 199, 0);
     //mode6::bline(0, 199, 639, 0);
 
-    //for (int i = 0; i < 100; ++i) {
-       // mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
-    //}
+    for (int i = 0; i < 100; ++i) {
+        mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
+    }
 
     std::getchar();
 
