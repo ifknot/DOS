@@ -2,6 +2,9 @@
 
 #include <cassert>
 
+#define EVEN_LINES	0B800h	// even lines video buffer memory	
+#define ODD_LINES	0BA00h	// odd lines video buffer memory
+
 namespace mode6 {
 
 	void plot(uint16_t x, uint16_t y) {
@@ -15,11 +18,11 @@ namespace mode6 {
 			push    es
 
 			// ax column byte, bx 80 byte row, dl pixel bit 
-			mov		ax, 0B800h	; even lines video buffer memory
+			mov		ax, EVEN_LINES	
 			mov		bx, y		; load y
 			test	bx, 01h		; is it an odd row?
 			jz		EVEN		; no keep even lines offset
-			mov		ax, 0BA00h	; odd lines video buffer memory
+			mov		ax, ODD_LINES	
 	EVEN:	mov		es, ax		; offset into extended segment
 			// mode 6 is 1 bit per pixel
 			// bit to set within column byte is x mod 8
@@ -65,11 +68,11 @@ namespace mode6 {
 			push	dx
 			push    es
 
-			mov		ax, 0B800h	
+			mov		ax, EVEN_LINES	
 			mov		bx, y 
 			test	bx, 01h 
 			jz		EVEN 
-			mov		ax, 0BA00h 
+			mov		ax, ODD_LINES 
 			EVEN :	mov		es, ax 
 			mov		ax, x 
 			mov		cx, ax 
@@ -109,12 +112,12 @@ namespace mode6 {
 			push    es
 
 			// starting page odd/even
-			mov		ax, 0B800h	; even lines video buffer memory
+			mov		ax, EVEN_LINES	
 			mov		bx, y1		; load y1
 			test	bx, 01h		; is it an odd row?
 			pushf				; preserve odd/even state
 			jz		KEEP		; no keep even lines offset
-			mov		ax, 0BA00h	; odd lines video buffer memory
+			mov		ax, ODD_LINES	
 	KEEP:	mov		es, ax		; offset into extended segment
 			// dl pixel bit
 			mov		ax, x		; load x
@@ -201,12 +204,12 @@ namespace mode6 {
 			push	dx
 			push    es
 
-			mov		ax, 0B800h	; even lines video buffer memory
+			mov		ax, EVEN_LINES	
 			mov		bx, y1		; load y1
 			test	bx, 01h		; is it an odd row?
 			pushf				; preserve odd/even state
 			jz		KEEP		; no keep even lines offset
-			mov		ax, 0BA00h	; odd lines video buffer memory
+			mov		ax, ODD_LINES	
 			KEEP:	mov		es, ax		; offset into extended segment	
 
 			mov		ax, x		; load x
@@ -282,11 +285,11 @@ namespace mode6 {
 			push	dx
 			push    es
 
-			mov		ax, 0B800h	; even lines video buffer memory
+			mov		ax, EVEN_LINES	
 			mov		bx, y		; load y
 			test	bx, 01h		; is it an odd row?
 			jz		EVEN		; no keep even lines offset
-			mov		ax, 0BA00h	; odd lines video buffer memory
+			mov		ax,  ODD_LINES	
 	EVEN:	mov		es, ax		; offset into extended segment
 			// construct left most byte
 			mov		ax, x1		; load x1
@@ -360,65 +363,65 @@ namespace mode6 {
 			push	dx
 			push    es
 
-			mov		ax, 0B800h; even lines video buffer memory
-			mov		bx, y; load y
-			test	bx, 01h; is it an odd row ?
-			jz		EVEN; no keep even lines offset
-			mov		ax, 0BA00h; odd lines video buffer memory
-			EVEN : mov		es, ax; offset into extended segment
+			mov		ax, EVEN_LINES
+			mov		bx, y		; load y
+			test	bx, 01h		; is it an odd row ?
+			jz		EVEN		; no keep even lines offset
+			mov		ax,  ODD_LINES
+	EVEN:	mov		es, ax		; offset into extended segment
 			// construct left most byte
-			mov		ax, x1; load x1
-			mov		cx, ax; copy x1
-			and cx, 07h; mask off 0111 lower bits(mod 8)
-			mov		dl, 0FFh; load dl with 1111111
-			shr		dl, cl; shift single bit along by x mod 8
+			mov		ax, x1		; load x1
+			mov		cx, ax		; copy x1
+			and		cx, 07h		; mask off 0111 lower bits(mod 8)
+			mov		dl, 0FFh	; load dl with 1111111
+			shr		dl, cl		; shift single bit along by x mod 8
 			// ax column byte
-			shr		ax, 1; 8086 shift right 3 times
+			shr		ax, 1		; 8086 shift right 3 times
 			shr		ax, 1
 			shr		ax, 1
 			// row	= y/2 * 80 bytes per row
 			//		= y * 40
 			//		= y * 0x28
 			//		= y * 101000 = 3 shl, add, 2 shl, add
-			and bx, 0FFFEh; remove even / odd row bit from y
-			shl		bx, 1; 8086 shift left 3 time
+			and		bx, 0FFFEh	; mask out even / odd row bit from y
+			shl		bx, 1		; 8086 shift left 3 time
 			shl		bx, 1
 			shl		bx, 1
-			mov		cx, bx; put result in cx
-			shl		cx, 1; 8086 shift left twice
+			mov		cx, bx		; put result in cx
+			shl		cx, 1		; 8086 shift left twice
 			shl		cx, 1
-			add		bx, cx; add back into bx
-			add		bx, ax; add in column byte
+			add		bx, cx		; add back into bx
+			add		bx, ax		; add in column byte
 			// line length fit in a single byte? (x1 % 8) + x2 - x1 < 8?
-			mov		cx, x1; load x1
-			and cx, 07h; mod 8
+			mov		cx, x1		; load x1
+			and		cx, 07h		; mod 8
 			add		cx, x2
 			sub		cx, x1
 
 			cmp		cx, 08h
-			jl		LEFT; only plot left byte
-			xor es: [bx] , dl; plot left most byte
-			mov		dl, 0FFh; load a full byte horizontal line
+			jl		LEFT		; only plot left byte
+			xor		es:[bx], dl	; plot left most byte
+			mov		dl, 0FFh	; load a full byte horizontal line
 			// line length overlap 2 bytes? (x1 % 8) + x2 - x1 < 16?
 			cmp		cx, 10h
-			jl		RIGHT; plot right most byte as well
-			shr		cx, 1; divide by 8
+			jl		RIGHT		; plot right most byte as well
+			shr		cx, 1		; divide by 8
 			shr		cx, 1
 			shr		cx, 1
 			dec		cx
-			FILL : inc		bx; point to next byte along
-			xor es: [bx] , dl; plot filler byte
+	FILL:	inc		bx			; point to next byte along
+			xor		es:[bx], dl	; plot filler byte
 			loop	FILL
 			// construct the right most byte
-			RIGHT : inc		bx
-			LEFT : mov		cx, 07h; load cx with 0000000000000111
-			sub		cx, x2; subtract x2
-			and cl, 07h; mask off 0111 lower bits(mod 8)
-			mov		dh, 0FFh; load dh with 1111111
-			shl		dh, cl; shift x2 mod 8
-			and dl, dh; mask off dl
+	RIGHT:	inc		bx
+	LEFT:	mov		cx, 07h		; load cx with ...0111
+			sub		cx, x2		; subtract x2
+			and		cl, 07h		; mask off 0111 lower bits(mod 8)
+			mov		dh, 0FFh	; load dh with 1111111
+			shl		dh, cl		; shift x2 mod 8
+			and		dl, dh		; mask off dl
 			// plot the right most byte
-			xor es: [bx] , dl; set pixel bit in video buffer
+			xor		es:[bx], dl	; xor pixel bit in video buffer
 
 			END : pop es
 			pop	dx
@@ -429,37 +432,7 @@ namespace mode6 {
 	}
 
 	void bline(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
-		int16_t dx, dy, p, x, y;
-		if (x0 > x1) {
-			x = x1;
-			x1 = x0;
-			x0 = x;
-		}
-		if (y0 > y1) {
-			y = y1;
-			y1 = y0;
-			y0 = y;
-		}
-		dx = x1 - x0;
-		dy = y1 - y0;
-		x = x0;
-		y = y0;
-		p = (dy - dx) >> 1;
-		while (x < x1)
-		{
-			if (p >= 0)
-			{
-				plot((uint16_t)x, (uint16_t)y);
-				y = y + 1;
-				p = p + 2 * dy - 2 * dx;
-			}
-			else
-			{
-				plot((uint16_t)x, (uint16_t)y);
-				p = p + 2 * dy;
-			}
-			x = x + 1;
-		}
+		
 	}
 
 	void box(uint16_t x, uint16_t y, uint16_t w, uint16_t h) {

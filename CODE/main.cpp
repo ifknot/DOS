@@ -65,6 +65,7 @@ int main() {
             //}
         }
     }
+    */
     for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
@@ -72,10 +73,9 @@ int main() {
             //}
         }
     }
-    */
 
-    mode6::bline(0, 0, 639, 199);
-    mode6::bline(0, 199, 639, 0);
+    //mode6::bline(0, 0, 639, 199);
+    //mode6::bline(0, 199, 639, 0);
 
     //for (int i = 0; i < 100; ++i) {
        // mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
