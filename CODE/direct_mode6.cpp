@@ -2,58 +2,6 @@
 
 #include <cassert>
 
-#define macro_plot	\
-					mov		ax, 0B800h	\
-					mov		bx, y \
-					test	bx, 01h \
-					jz		EVEN \
-					mov		ax, 0BA00h \
-			EVEN :	mov		es, ax \
-					mov		ax, x \
-					mov		cx, ax \
-					and		cx, 07h \
-					mov		dl, 080h \
-					shr		dl, cl \
-					shr		ax, 1 \
-					shr		ax, 1 \
-					shr		ax, 1 \
-					and		bx, 0FFFEh \
-					shl		bx, 1 \
-					shl		bx, 1 \
-					shl		bx, 1 \
-					mov		cx, bx \
-					shl		cx, 1 \
-					shl		cx, 1 \
-					add		bx, cx \
-					add		bx, ax \
-					or es: [bx] , dl
-
-#define macro_xor_plot	\
-					mov		ax, 0B800h	\
-					mov		bx, y \
-					test	bx, 01h \
-					jz		EVEN \
-					mov		ax, 0BA00h \
-			EVEN :	mov		es, ax \
-					mov		ax, x \
-					mov		cx, ax \
-					and		cx, 07h \
-					mov		dl, 080h \
-					shr		dl, cl \
-					shr		ax, 1 \
-					shr		ax, 1 \
-					shr		ax, 1 \
-					and		bx, 0FFFEh \
-					shl		bx, 1 \
-					shl		bx, 1 \
-					shl		bx, 1 \
-					mov		cx, bx \
-					shl		cx, 1 \
-					shl		cx, 1 \
-					add		bx, cx \
-					add		bx, ax \
-					xor es: [bx] , dl
-
 namespace mode6 {
 
 	void plot(uint16_t x, uint16_t y) {
@@ -117,7 +65,30 @@ namespace mode6 {
 			push	dx
 			push    es
 
-			macro_xor_plot
+			mov		ax, 0B800h	
+			mov		bx, y 
+			test	bx, 01h 
+			jz		EVEN 
+			mov		ax, 0BA00h 
+			EVEN :	mov		es, ax 
+			mov		ax, x 
+			mov		cx, ax 
+			and cx, 07h 
+			mov		dl, 080h 
+			shr		dl, cl 
+			shr		ax, 1 
+			shr		ax, 1 
+			shr		ax, 1 
+			and bx, 0FFFEh 
+			shl		bx, 1 
+			shl		bx, 1 
+			shl		bx, 1 
+			mov		cx, bx 
+			shl		cx, 1 
+			shl		cx, 1 
+			add		bx, cx 
+			add		bx, ax 
+			xor es: [bx] , dl
 
 			pop es
 			pop	dx
@@ -497,3 +468,29 @@ namespace mode6 {
 
 }
 
+/* plot core
+					mov		ax, 0B800h	
+					mov		bx, y 
+					test	bx, 01h 
+					jz		EVEN 
+					mov		ax, 0BA00h 
+			EVEN :	mov		es, ax
+					mov		ax, x 
+					mov		cx, ax 
+					and		cx, 07h 
+					mov		dl, 080h 
+					shr		dl, cl 
+					shr		ax, 1 
+					shr		ax, 1 
+					shr		ax, 1 
+					and		bx, 0FFFEh 
+					shl		bx, 1 
+					shl		bx, 1 
+					shl		bx, 1 
+					mov		cx, bx
+					shl		cx, 1 
+					shl		cx, 1 
+					add		bx, cx 
+					add		bx, ax 
+					or es: [bx] , dl
+*/
