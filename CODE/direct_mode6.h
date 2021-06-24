@@ -16,8 +16,8 @@ namespace mode6 {
 
 	void xor_hline(uint16_t x1, uint16_t x2, uint16_t y);
 
-	void bline(int16_t x0, int16_t y0, int16_t x1, int16_t y1);
+	void bline(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 
-	void box(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+	//void box(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
 }
