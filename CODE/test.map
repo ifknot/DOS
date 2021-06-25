@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta Apr  2 2021 00:33:57 (64-bit)
 Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       21/06/24 23:13:22
+Created on:       21/06/25 20:13:41
 Executable Image: test.exe
 creating a DOS executable
 
@@ -24,9 +24,9 @@ DGROUP                          0956:0000            00002500
 Segment                Class          Group          Address         Size
 =======                =====          =====          =======         ====
 
-direct_mode6_TEXT      CODE           AUTO           0000:0000       00000671
-direct_system_TEXT     CODE           AUTO           0000:0671       0000056c
-main_TEXT              CODE           AUTO           0000:0bdd       0000088c
+direct_mode6_TEXT      CODE           AUTO           0000:0000       00000673
+direct_system_TEXT     CODE           AUTO           0000:0673       0000056c
+main_TEXT              CODE           AUTO           0000:0bdf       0000088c
 _TEXT                  CODE           AUTO           0000:1470       000037fa
 cppdata_TEXT           CODE           AUTO           0000:4c6a       00000000
 fsregist_TEXT          CODE           AUTO           0000:4c6a       00000384
@@ -233,23 +233,23 @@ Module: direct_mode6.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode6.cpp)
 0000:0480+     void __far mode6::xor_hline( short unsigned, short unsigned, short unsigned )
 0000:0580      void __far mode6::bline( short, short, short, short )
 Module: direct_system.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.cpp)
-0000:08a1      __far std::allocator<char __far >::~allocator()
-0000:08da      __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::basic_string( std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far > const __far & )
-0000:0a47      __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::~basic_string()
-0000:0b48      char __far * __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::alloc( int unsigned, int unsigned __far & )
-0000:0671      bool __far system::detect_8087()
-0000:06c3      bool __far system::detect_crtc()
-0000:0723      dos::video_adapter_t __far system::get_video_adapter_type()
-0000:07e2      void __far system::set_video_mode( dos::video_mode_t )
-0000:082b      dos::video_state_t __far system::get_video_state()
+0000:08a3      __far std::allocator<char __far >::~allocator()
+0000:08dc      __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::basic_string( std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far > const __far & )
+0000:0a49      __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::~basic_string()
+0000:0b4a      char __far * __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::alloc( int unsigned, int unsigned __far & )
+0000:0673      bool __far system::detect_8087()
+0000:06c5      bool __far system::detect_crtc()
+0000:0725      dos::video_adapter_t __far system::get_video_adapter_type()
+0000:07e4      void __far system::set_video_mode( dos::video_mode_t )
+0000:082d      dos::video_state_t __far system::get_video_state()
 0956:00d8      int unsigned const __far std::basic_string<char __far,std::char_traits<char __far > __far,std::allocator<char __far > __far >::npos
 Module: main.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\main.cpp)
 0956:1cf8+     long unsigned __far random::long unsigned __far xorshift32( long unsigned )::.0::y
-0000:0bdd+     void __far cbox( short unsigned, short unsigned, short unsigned )
-0000:0c4e+     void __far slo_vline( short unsigned, short unsigned, short unsigned )
-0000:0c9b+     void __far slo_hline( short unsigned, short unsigned, short unsigned )
-0000:0ce8+     void __far slo_box( short unsigned, short unsigned, short unsigned )
-0000:0d55      main_
+0000:0bdf+     void __far cbox( short unsigned, short unsigned, short unsigned )
+0000:0c50+     void __far slo_vline( short unsigned, short unsigned, short unsigned )
+0000:0c9d+     void __far slo_hline( short unsigned, short unsigned, short unsigned )
+0000:0cea+     void __far slo_box( short unsigned, short unsigned, short unsigned )
+0000:0d57      main_
 Module: C:\WATCOM\lib286\dos\clibl.lib(stk086.asm)
 0000:1475      __STK
 0000:1495*     __STKOVERFLOW_
@@ -715,4 +715,4 @@ C:\WATCOM\lib286\dos\clibl.lib
 Stack size:  0800 (2048.)
 Memory size:  ba60 (47712.)
 Entry point address: 0000:188a
-Link time: 00:00.13
+Link time: 00:00.09

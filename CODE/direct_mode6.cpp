@@ -440,24 +440,25 @@ namespace mode6 {
 			push	cx
 			push	dx
 			push    di
+			push	si
 
 			// calculate deltas, steps and distance limits
-			mov		ax, x1		; load starting point x
-			mov		bx, y1		; load starting point y
+			mov		ax, x1; load starting point x
+			mov		bx, y1; load starting point y
 			// is it a positive or negative x direction?
-			mov		step_x, -1	; assume -ve x direction
-			sub		ax, x2		; calculate delta x
-			jge		NEGX		; yes -ve x direction so calculate y direction
-			neg		ax			; abs(delta x)
-			neg		step_x		; +ve x direction
+			mov		step_x, -1; assume - ve x direction
+			sub		ax, x2; calculate delta x
+			jge		NEGX; yes - ve x direction so calculate y direction
+			neg		ax; abs(delta x)
+			neg		step_x; +ve x direction
 			// is it a positive or negative y direction?
-	NEGX:	mov		delta_x, ax	; store delta x
-			mov		step_y, -1	; assume -ve y direction
-			sub		bx, y2		; calculate delta y
-			jge		NEGY		; yes -ve y direction
-			neg		bx			; abs(delta y)
-			neg		step_y		; +ve y direction
-	NEGY:	mov		delta_y, bx	; store delta y
+			NEGX : mov		delta_x, ax; store delta x
+			mov		step_y, -1; assume - ve y direction
+			sub		bx, y2; calculate delta y
+			jge		NEGY; yes - ve y direction
+			neg		bx; abs(delta y)
+			neg		step_y; +ve y direction
+			NEGY : mov		delta_y, bx; store delta y
 			// delta x in bx, delta y in ax
 			inc		ax
 			mov		cx, ax		; save x repeat count
@@ -468,19 +469,22 @@ namespace mode6 {
 			mov		dx, bx		; save y repeat count
 			shr		bx, 1		; i2 = delta_x - (delta_y + 1) div 2
 			sub		bx, cx		; adjust possible repeate count
-			inc		bx			
+			inc		bx
 			neg		bx
 			mov		i2, bx		; store i1
 			cmp		cx, dx		; repeat count max(delta_x + 1, delta_y + 1)
 			jge		BIGX		; delta_x is bigger
 			mov		cx, dx		; delta_y is bigger
 			// assume distance limit decision variable D = 0 and x,y start point
-	BIGX:	mov		ax, x1
-			mov		bx, y1
-			xor		di, di		; zero D
+			// maximise use 8086 limited no. registers (6 ie AX BX CX DX SI DI) to improve performance 
+	BIGX:	mov		ax, x1		; load x1 into ax
+			mov		bx, y1		; load y1 into bx
+			mov		si, i1		; load i1 into si
+			xor		di, di		; load D into di
 			jmp		BPLOT		; plot the first point
-	MORE:	mov		dx, di		; load decision variable D
-			cmp		dx, i1
+	MORE:	mov		dx, di		; load decision variable D into dx
+			//cmp		dx, i1	; 9 + 6EA cycles every loop
+			cmp		dx, si		; 3 reg, reg cycles every loop (20% of reg, mem)
 			jl		HZ			; D too -ve so must be horizontal
 			add		bx, step_y	; vertical step
 			sub		dx, delta_x ; update decision variable D - delta_x
@@ -490,13 +494,12 @@ namespace mode6 {
 			add		dx, delta_y ; update decision variable D + delta_y
 	NDIAG:	mov		di, dx		; store D
 			// inline plot pixel (x,y) as (ax,bx)
-	BPLOT:	push	ax
+	BPLOT:	push	ax			
 			push	bx
 			push	cx
 			push	dx
-			push    es
 
-			// ax column byte, bx 80 byte row, dl pixel bit 
+			// ax column byte, bx 80 byte row, dl pixel bit  
 			mov		cx, EVEN_LINES	
 			//mov		bx, y		; load y
 			test	bx, 01h		; is it an odd row?
@@ -529,7 +532,6 @@ namespace mode6 {
 			add		bx, ax		; add in column byte
 			or		es:[bx], dl	; set pixel bit in video buffer
 
-			pop		es
 			pop		dx
 			pop		cx
 			pop		bx
@@ -537,6 +539,7 @@ namespace mode6 {
 
 			loop	MORE
 
+			pop		si
 			pop		di
 			pop		dx
 			pop		cx
