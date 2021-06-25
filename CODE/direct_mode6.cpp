@@ -483,8 +483,8 @@ namespace mode6 {
 			xor		di, di		; load D into di
 			jmp		BPLOT		; plot the first point
 	MORE:	mov		dx, di		; load decision variable D into dx
-			//cmp		dx, i1	; 9 + 6EA cycles every loop
-			cmp		dx, si		; 3 reg, reg cycles every loop (20% of reg, mem)
+			cmp		dx, i1	; 9 + 6EA cycles every loop
+			//cmp		dx, si		; 3 reg, reg cycles every loop (20% of reg, mem)
 			jl		HZ			; D too -ve so must be horizontal
 			add		bx, step_y	; vertical step
 			sub		dx, delta_x ; update decision variable D - delta_x

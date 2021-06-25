@@ -53,4 +53,20 @@ namespace system {
 	 */
 	video_state_t get_video_state();
 
+	/**
+	 * INT 1A,0 - Read System Clock Counter
+	 * AH = 00
+	 * on return:
+	 * AL = midnight flag, 1 if 24 hours passed since reset
+	 * CX = high order word of tick count
+	 * DX = low order word of tick count
+	 * - incremented approximately 18.206 times per second
+	 * - at midnight CX:DX is zero
+	 * - this function can be called in a program to assure the date is updated after midnight
+	 * - this will avoid the passing two midnights date problem.
+	 */
+	uint32_t read_clock_counter();
+
+	//void reset_clock_counter();
+
 }

@@ -102,4 +102,15 @@ namespace system {
 		return v;
 	}
 
+	uint32_t read_clock_counter() {
+		uint32_t c;
+		union REGS r;
+		r.h.ah = 0;
+		int86(0x1A, &r, &r);
+		c = r.x.cx;
+		c <<= 16;
+		c |= r.x.dx;
+		return c;
+	}
+
 }
