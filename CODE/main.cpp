@@ -17,13 +17,13 @@ void cbox(uint16_t x, uint16_t y, uint16_t w) {
 
 void slo_vline(uint16_t x, uint16_t y1, uint16_t y2) {
     for (uint16_t i = 0; i <= y2 - y1; ++i) {
-        mode4::plot(x, y1 + i, mode4::white);
+        mode4::plot(x, y1 + i, mode4::cyan);
     }
 }
 
 void slo_hline(uint16_t x1, uint16_t x2, uint16_t y) {
     for (uint16_t i = 0; i <= x2 - x1; ++i) {
-        mode4::plot(x1 + i, y, mode4::white);
+        mode4::plot(x1 + i, y, mode4::magenta);
     }
 }
 
@@ -69,15 +69,6 @@ int main() {
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
    
     std::getchar();
-
-    for (int i = 0; i < 200; ++i) {
-       
-        mode4::plot(1, i, mode4::white);
-        mode4::plot(i, i, mode4::white);
-        
-
-    }
-
     
     /*
     t1 = system::read_clock_counter();
@@ -93,9 +84,9 @@ int main() {
     uint32_t t2 = system::read_clock_counter();
     std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
     */
-    /* 
+    
     t1 = system::read_clock_counter();
-    for (uint16_t j = 1; j < 10; j += 2) {
+    for (uint16_t j = 2; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
             slo_box(i, i, j);
@@ -104,7 +95,7 @@ int main() {
     }
     t2 = system::read_clock_counter();
     std::cout << t2 - t1 << '\n';
-    */
+    
     //mode6::bline(0, 0, 199, 199);
     //mode6::bline(0, 0, 0, 199);
     //mode6::bline(0, 0, 25, 199);

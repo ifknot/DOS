@@ -28,8 +28,8 @@ namespace mode4 {
 			// bit to set within column byte is x mod 4
 			mov		ax, x		; load x
 			mov		cx, ax		; copy x
-			and		cx, 03h		; mask off 0011 lower bits(mod 4)
-			shl		cx, 1		; x 2
+			and		cx, 03h		; mask off 0011 lower bits(x mod 4)
+			shl		cx, 1		; x 2 (2 bits of colour information)
 			mov		dl,	colour	; load 2 bits of colour
 			shr		dl, cl		; shift colour along by x mod 4
 			// column byte is x/4
