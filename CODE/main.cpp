@@ -23,7 +23,7 @@ void slo_vline(uint16_t x, uint16_t y1, uint16_t y2) {
 
 void slo_hline(uint16_t x1, uint16_t x2, uint16_t y) {
     for (uint16_t i = 0; i <= x2 - x1; ++i) {
-        mode4::plot(x1 + i, y, mode4::magenta);
+        mode4::xor_plot(x1 + i, y, mode4::magenta);
     }
 }
 
@@ -86,7 +86,7 @@ int main() {
     */
     
     t1 = system::read_clock_counter();
-    for (uint16_t j = 2; j < 10; j += 2) {
+    for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
             slo_box(i, i, j);

@@ -34,8 +34,7 @@ namespace mode4 {
 			shr		dl, cl		; shift colour along by x mod 4
 			// column byte is x/4
 			shr		ax, 1		; 8086 shift right 2 times
-			shr		ax, 1
-			
+			shr		ax, 1			
 			// row	= y/2 * 80 bytes per row
 			//		= y * 40
 			//		= y * 0x28
@@ -50,6 +49,49 @@ namespace mode4 {
 			add		bx, cx		; add back into bx
 			add		bx, ax		; add in column byte
 			or		es:[bx], dl	; set pixel bit in video buffer
+
+			pop es
+			pop	dx
+			pop	cx
+			pop	bx
+			pop	ax
+		}
+	}
+
+	void xor_plot(uint16_t x, uint16_t y, colour_t colour) {
+		assert(x < 640 && y < 200);
+		__asm {
+			.8086
+			push	ax
+			push	bx
+			push	cx
+			push	dx
+			push    es
+			
+			mov		ax, EVEN_LINES
+			mov		bx, y
+			test	bx, 01h
+			jz		EVEN
+			mov		ax, ODD_LINES
+	EVEN:	mov		es, ax
+			mov		ax, x
+			mov		cx, ax
+			and		cx, 03h
+			shl		cx, 1
+			mov		dl, colour
+			shr		dl, cl
+			shr		ax, 1
+			shr		ax, 1
+			and		bx, 0FFFEh
+			shl		bx, 1
+			shl		bx, 1
+			shl		bx, 1
+			mov		cx, bx
+			shl		cx, 1
+			shl		cx, 1
+			add		bx, cx
+			add		bx, ax
+			xor		es: [bx] , dl
 
 			pop es
 			pop	dx
