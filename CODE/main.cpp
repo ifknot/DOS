@@ -4,25 +4,26 @@
 
 
 #include "direct_system.h"
-#include "direct_mode6.h"
+//#include "direct_mode6.h"
+#include "direct_mode4.h"
 #include "random.h"
 
 void cbox(uint16_t x, uint16_t y, uint16_t w) {
-    mode6::hline(x, x + w, y);
-    mode6::hline(x, x + w, y + w);
-    mode6::vline(x, y, y + w);
-    mode6::vline(x + w, y, y + w);
+    //mode6::hline(x, x + w, y);
+    //mode6::hline(x, x + w, y + w);
+    //mode6::vline(x, y, y + w);
+    //mode6::vline(x + w, y, y + w);
 }
 
 void slo_vline(uint16_t x, uint16_t y1, uint16_t y2) {
     for (uint16_t i = 0; i <= y2 - y1; ++i) {
-        mode6::plot(x, y1 + i);
+        mode4::plot(x, y1 + i, mode4::white);
     }
 }
 
 void slo_hline(uint16_t x1, uint16_t x2, uint16_t y) {
     for (uint16_t i = 0; i <= x2 - x1; ++i) {
-        mode6::plot(x1 + i, y);
+        mode4::plot(x1 + i, y, mode4::white);
     }
 }
 
@@ -35,13 +36,15 @@ void slo_box(uint16_t x, uint16_t y, uint16_t w) {
 
 int main() {
 
+    uint32_t t1, t2;
+
     std::cout << "*** test harness ***\n\n";
 
     system::reset_clock_counter(100);
 
     std::cout << std::dec << system::read_clock_counter() << '\n';
 
-    uint32_t t1 = system::read_clock_counter();
+    t1 = system::read_clock_counter();
 
     std::cout << "detect npx = " << (system::detect_8087() ? "yes" : "no") << '\n';
 
@@ -57,7 +60,8 @@ int main() {
 
     std::getchar();
 
-    system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
+    //system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
+    system::set_video_mode(dos::GRAPHICS_4_COLOUR_300x200);
 
     dos::video_state_t old = v;
     v = system::get_video_state();
@@ -65,6 +69,16 @@ int main() {
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
    
     std::getchar();
+
+    for (int i = 0; i < 200; ++i) {
+       
+        mode4::plot(1, i, mode4::white);
+        mode4::plot(i, i, mode4::white);
+        
+
+    }
+
+    
     /*
     t1 = system::read_clock_counter();
     for (int x = 0; x < 450; x += 25) {
@@ -79,12 +93,12 @@ int main() {
     uint32_t t2 = system::read_clock_counter();
     std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
     */
-    /*
+    /* 
     t1 = system::read_clock_counter();
     for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
-            slo_box(i + 55, i, j);
+            slo_box(i, i, j);
             //}
         }
     }
@@ -97,14 +111,14 @@ int main() {
     //mode6::bline(0, 0, 50, 199);
     //mode6::bline(0, 0, 199, 0);
     //mode6::bline(0, 199, 639, 0);
-    
+    /* 
     t1 = system::read_clock_counter();
     for (int i = 0; i < 500; ++i) {
         mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
     }
     uint32_t t2 = system::read_clock_counter();
     std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
-
+    */
     std::getchar();
 
     system::set_video_mode(old.mode);

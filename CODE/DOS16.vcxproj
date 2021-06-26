@@ -71,11 +71,13 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="direct_mode4.cpp" />
     <ClCompile Include="direct_mode6.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="direct_system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="direct_mode4.h" />
     <ClInclude Include="direct_mode6.h" />
     <ClInclude Include="direct_system.h" />
     <ClInclude Include="display_types.h" />
