@@ -37,9 +37,9 @@ int main() {
 
     std::cout << "*** test harness ***\n\n";
 
-    std::cout << std::dec << system::read_system_clock_counter() << '\n';
+    std::cout << std::dec << system::read_clock_counter() << '\n';
 
-    uint32_t t1 = system::read_system_clock_counter();
+    uint32_t t1 = system::read_clock_counter();
 
     std::cout << "detect npx = " << (system::detect_8087() ? "yes" : "no") << '\n';
 
@@ -51,7 +51,7 @@ int main() {
 
     std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
 
-    std::cout << std::dec  << system::read_system_clock_counter() - t1 << '\n';
+    std::cout << std::dec  << system::read_clock_counter() - t1 << '\n';
 
     std::getchar();
 
@@ -61,21 +61,24 @@ int main() {
     v = system::get_video_state();
 
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
-
+   
     std::getchar();
-    std::cout << std::dec << system::read_system_clock_counter() << '\n';
-    t1 = system::read_system_clock_counter();
-    for (uint16_t j = 1; j < 10; j += 2) {
-        for (uint16_t i = 0; i < 189; i += 11) {
-            //if (i % 2 == 0) {
-            cbox(i + 30, i, j);
-            //}
+    /*
+    t1 = system::read_clock_counter();
+    for (int x = 0; x < 450; x += 25) {
+        for (uint16_t j = 1; j < 10; j += 2) {
+            for (uint16_t i = 0; i < 189; i += 11) {
+                //if (i % 2 == 0) {
+                cbox(i + x, i, j);
+                //}
+            }
         }
     }
-    uint32_t t2 = system::read_system_clock_counter();
-    std::cout << t2 - t1 << '\n';
-    
-    t1 = system::read_system_clock_counter();
+    uint32_t t2 = system::read_clock_counter();
+    std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
+    */
+    /*
+    t1 = system::read_clock_counter();
     for (uint16_t j = 1; j < 10; j += 2) {
         for (uint16_t i = 0; i < 189; i += 11) {
             //if (i % 2 == 0) {
@@ -83,23 +86,23 @@ int main() {
             //}
         }
     }
-    t2 = system::read_system_clock_counter();
+    t2 = system::read_clock_counter();
     std::cout << t2 - t1 << '\n';
-    
+    */
     //mode6::bline(0, 0, 199, 199);
     //mode6::bline(0, 0, 0, 199);
     //mode6::bline(0, 0, 25, 199);
     //mode6::bline(0, 0, 50, 199);
     //mode6::bline(0, 0, 199, 0);
     //mode6::bline(0, 199, 639, 0);
-
-    t1 = system::read_system_clock_counter();
-    for (int i = 0; i < 100; ++i) {
+    
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < 500; ++i) {
         mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
     }
-    t2 = system::read_system_clock_counter();
-    std::cout << t2 - t1 << '\n';
-    std::cout << std::dec << system::read_system_clock_counter() << '\n';
+    uint32_t t2 = system::read_clock_counter();
+    std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
     std::getchar();
 
     system::set_video_mode(old.mode);
