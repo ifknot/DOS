@@ -67,6 +67,6 @@ namespace system {
 	 */
 	uint32_t read_clock_counter();
 
-	//void reset_clock_counter();
+	void reset_clock_counter(uint32_t t = 0);
 
 }

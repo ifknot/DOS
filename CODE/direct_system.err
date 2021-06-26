@@ -1,2 +1,4 @@
+direct_system.cpp(117): Warning! W389: col(29) integral value may be truncated during assignment or initialization
+direct_system.cpp(118): Warning! W389: col(29) integral value may be truncated during assignment or initialization
 C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'video_adapter_names'
 display_types.h(172): Note! N392: col(21) definition: 'char dos::video_adapter_names[10][255]'

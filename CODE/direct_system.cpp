@@ -113,4 +113,14 @@ namespace system {
 		return c;
 	}
 
+	void reset_clock_counter(uint32_t t) {
+		uint16_t lo = t;
+		uint16_t hi = t >> 16;
+		union REGS r;
+		r.h.ah = 1;
+		r.x.cx = hi;
+		r.x.dx = lo;
+		int86(0x1A, &r, &r);
+	}
+
 }

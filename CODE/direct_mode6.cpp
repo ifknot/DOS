@@ -443,22 +443,22 @@ namespace mode6 {
 			push	si
 
 			// calculate deltas, steps and distance limits
-			mov		ax, x1; load starting point x
-			mov		bx, y1; load starting point y
+			mov		ax, x1		; load starting point x
+			mov		bx, y1		; load starting point y
 			// is it a positive or negative x direction?
-			mov		step_x, -1; assume - ve x direction
-			sub		ax, x2; calculate delta x
-			jge		NEGX; yes - ve x direction so calculate y direction
-			neg		ax; abs(delta x)
-			neg		step_x; +ve x direction
+			mov		step_x, -1	; assume - ve x direction
+			sub		ax, x2		; calculate delta x
+			jge		NEGX		; yes - ve x direction so calculate y direction
+			neg		ax			; abs(delta x)
+			neg		step_x		; +ve x direction
 			// is it a positive or negative y direction?
-			NEGX : mov		delta_x, ax; store delta x
-			mov		step_y, -1; assume - ve y direction
-			sub		bx, y2; calculate delta y
-			jge		NEGY; yes - ve y direction
-			neg		bx; abs(delta y)
-			neg		step_y; +ve y direction
-			NEGY : mov		delta_y, bx; store delta y
+	NEGX:	mov		delta_x, ax	; store delta x
+			mov		step_y, -1	; assume - ve y direction
+			sub		bx, y2		; calculate delta y
+			jge		NEGY		; yes - ve y direction
+			neg		bx			; abs(delta y)
+			neg		step_y		; +ve y direction
+	NEGY:	mov		delta_y, bx	; store delta y
 			// delta x in bx, delta y in ax
 			inc		ax
 			mov		cx, ax		; save x repeat count
@@ -482,9 +482,10 @@ namespace mode6 {
 			mov		si, i1		; load i1 into si
 			xor		di, di		; load D into di
 			jmp		BPLOT		; plot the first point
+			// next pixel selected with the least distance from true line
 	MORE:	mov		dx, di		; load decision variable D into dx
-			cmp		dx, i1	; 9 + 6EA cycles every loop
-			//cmp		dx, si		; 3 reg, reg cycles every loop (20% of reg, mem)
+			//cmp		dx, i1		; 9 + 6EA cycles every loop
+			cmp		dx, si		; 3 reg, reg cycles every loop (20% of reg, mem)
 			jl		HZ			; D too -ve so must be horizontal
 			add		bx, step_y	; vertical step
 			sub		dx, delta_x ; update decision variable D - delta_x

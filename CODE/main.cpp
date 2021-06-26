@@ -37,6 +37,8 @@ int main() {
 
     std::cout << "*** test harness ***\n\n";
 
+    system::reset_clock_counter(100);
+
     std::cout << std::dec << system::read_clock_counter() << '\n';
 
     uint32_t t1 = system::read_clock_counter();
@@ -109,8 +111,9 @@ int main() {
 
     v = system::get_video_state();
 
-    std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
+    std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
 
+    std::cout << std::dec << system::read_clock_counter() << '\n';
     std::cout << "\nOK\n";
     return 0;
 
