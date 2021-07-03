@@ -21,12 +21,20 @@ namespace cga {
 
 	struct point_t {
 
+		point_t() : x(0), y(0) {}
+
+		point_t(uint16_t x, uint16_t y) : x(x), y(y) {}
+
 		uint16_t x;
 		uint16_t y;
 
 	};
 
 	struct dim_t {
+
+		dim_t() : width(0), height(0) {}
+
+		dim_t(uint16_t width, uint16_t height) : width(width), height(height) {}
 
 		uint16_t width;
 		uint16_t height;

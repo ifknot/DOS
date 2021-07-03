@@ -112,18 +112,28 @@ namespace mode4 {
 			push di
 
 			mov		ax, EVEN_LINES
-			mov		bx, y
-			test	bx, 01h
+			mov		di, y
+			test	di, 01h
 			jz		EVEN
 			mov		ax, ODD_LINES
 	EVEN:	mov		es, ax
-			lds		si, data		
+			mov		ax, x
+			shr		ax, 1
+			shr		ax, 1
+			and		di, 0FFFEh
+			shl		di, 1
+			shl		di, 1
+			shl		di, 1
+			mov		cx, di
+			shl		cx, 1
+			shl		cx, 1
+			add		di, cx
+			add		di, ax
 
+			lds		si, data		
 			mov		cx, w
-			xor		di, di
 			cld
-			
-			rep		movsb 
+			rep		movsw 
 
 			pop di
 			pop es

@@ -22,13 +22,8 @@ int main() {
 
     std::getchar();
 
-    cga::point_t p;
-    cga::dim_t d;
-
-    p.x = 10;
-    p.y = 10;
-    d.width = 6;
-    d.height = 6;
+    cga::point_t p(10,10);
+    cga::dim_t d(6,6);
 
     uint8_t bitmap[36] = {
         0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
@@ -39,7 +34,7 @@ int main() {
         0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF
     };
 
-    mode4::paste(p.x, p.y, d.width, d.height, bitmap);
+    mode4::paste(p.x, p.y, d.width / 2, d.height, bitmap);
 
     std::cout << "\nOK\n";
     return 0;
