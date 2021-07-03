@@ -27,6 +27,9 @@
     <ClCompile Include="direct_mode4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cga_bitmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="direct_system.h">
@@ -42,6 +45,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="direct_mode4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cga_bitmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cga_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cga_colours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

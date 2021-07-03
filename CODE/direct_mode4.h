@@ -2,33 +2,23 @@
 
 #include <stdint.h>
 
+#include "cga_bitmap.h"
+
 namespace mode4 {
 
-	enum palette_t { warm = 0, cool };
-
-	enum intensity_t { low = 0, high = 0x10 };
-
-	enum colour_t { 
-		black, 
-		cyan = 0x40, 
-		red = 0x40,
-		magenta = 0x80, 
-		green = 0x80,
-		white = 0xC0,
-		yellow = 0xC0
-	};
-
-	/**
-	 * 'warm' = Black, Red, Green and Yellow
-	 * 'cool' = Black, Cyan, Magenta and White
-	 */
 	//void select_pallette(palette);
 
 	//void set_brightness(intensity);
 
-	void plot(uint16_t x, uint16_t y, colour_t colour);
+	void plot(uint16_t x, uint16_t y, cga::colour_t colour);
 
-	void xor_plot(uint16_t x, uint16_t y, colour_t colour);
+	void xor_plot(uint16_t x, uint16_t y, cga::colour_t colour);
+
+	//void copy(cga::bitmap& bmp);
+
+	//void cut(cga::bitmap& bmp);
+
+	void paste(cga::point_t p, cga::bitmap& bmp);
 
 	//void vline(uint16_t x, uint16_t y1, uint16_t y2);
 

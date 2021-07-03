@@ -1,4 +1,11 @@
 !define BLANK ""
+C:\Users\ifkno\DOSBOX\DOS16\CODE\cga_bitmap.obj : C:\Users\ifkno\DOSBOX\DOS1&
+6\CODE\cga_bitmap.cpp .AUTODEPEND
+ @C:
+ cd C:\Users\ifkno\DOSBOX\DOS16\CODE
+ *wpp cga_bitmap.cpp -i="C:\WATCOM/h" -w4 -e25 -zq -od -d2 -bt=dos -fo=.obj &
+-ml -xs -xr
+
 C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode4.obj : C:\Users\ifkno\DOSBOX\DO&
 S16\CODE\direct_mode4.cpp .AUTODEPEND
  @C:
@@ -28,15 +35,18 @@ C:\Users\ifkno\DOSBOX\DOS16\CODE\main.obj : C:\Users\ifkno\DOSBOX\DOS16\CODE&
 s -xr
 
 C:\Users\ifkno\DOSBOX\DOS16\CODE\test.exe : C:\Users\ifkno\DOSBOX\DOS16\CODE&
-\direct_mode4.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode6.obj C:\Users&
-\ifkno\DOSBOX\DOS16\CODE\direct_system.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\&
-main.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode4.h C:\Users\ifkno\DOSB&
-OX\DOS16\CODE\direct_mode6.h C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.&
-h C:\Users\ifkno\DOSBOX\DOS16\CODE\display_types.h .AUTODEPEND
+\cga_bitmap.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode4.obj C:\Users\i&
+fkno\DOSBOX\DOS16\CODE\direct_mode6.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\dir&
+ect_system.obj C:\Users\ifkno\DOSBOX\DOS16\CODE\main.obj C:\Users\ifkno\DOSB&
+OX\DOS16\CODE\cga_bitmap.h C:\Users\ifkno\DOSBOX\DOS16\CODE\cga_colours.h C:&
+\Users\ifkno\DOSBOX\DOS16\CODE\cga_types.h C:\Users\ifkno\DOSBOX\DOS16\CODE\&
+direct_mode4.h C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode6.h C:\Users\ifkn&
+o\DOSBOX\DOS16\CODE\direct_system.h C:\Users\ifkno\DOSBOX\DOS16\CODE\display&
+_types.h .AUTODEPEND
  @C:
  cd C:\Users\ifkno\DOSBOX\DOS16\CODE
- @%write test.lk1 FIL direct_mode4.obj,direct_mode6.obj,direct_system.obj,ma&
-in.obj
+ @%write test.lk1 FIL cga_bitmap.obj,direct_mode4.obj,direct_mode6.obj,direc&
+t_system.obj,main.obj
  @%append test.lk1 
  *wlink name test d all sys dos op m op maxe=25 op q op symf @test.lk1
 

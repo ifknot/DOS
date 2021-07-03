@@ -1,0 +1,2 @@
+direct_mode4.cpp(110): Warning! W726: col(9) no reference to formal parameter 'bmp'
+direct_mode4.cpp(104): Note! N392: col(49) definition: 'cga::bitmap & bmp' in 'void mode4::paste( cga::point_t, cga::bitmap & )'

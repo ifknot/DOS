@@ -17,13 +17,13 @@ void cbox(uint16_t x, uint16_t y, uint16_t w) {
 
 void slo_vline(uint16_t x, uint16_t y1, uint16_t y2) {
     for (uint16_t i = 0; i <= y2 - y1; ++i) {
-        mode4::plot(x, y1 + i, mode4::cyan);
+        mode4::plot(x, y1 + i, cga::cyan);
     }
 }
 
 void slo_hline(uint16_t x1, uint16_t x2, uint16_t y) {
     for (uint16_t i = 0; i <= x2 - x1; ++i) {
-        mode4::xor_plot(x1 + i, y, mode4::magenta);
+        mode4::xor_plot(x1 + i, y, cga::magenta);
     }
 }
 
