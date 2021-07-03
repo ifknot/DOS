@@ -18,7 +18,7 @@ namespace mode4 {
 
 	//void cut(cga::bitmap& bmp);
 
-	void paste(cga::point_t p, cga::bitmap& bmp);
+	uint16_t paste(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t data[], uint16_t size);
 
 	//void vline(uint16_t x, uint16_t y1, uint16_t y2);
 

@@ -6,6 +6,31 @@
 #include "direct_system.h"
 //#include "direct_mode6.h"
 #include "direct_mode4.h"
+
+
+int main() {
+
+    cga::point_t p{ 10,10 };
+    cga::dim_t d{ 6,6 };
+
+    cga::byte_vector_t bitmap = {
+        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
+        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
+        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
+        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
+        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
+        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
+    };
+
+    std::cout << mode4::paste(p.x, p.y, d.width, d.height, bitmap.data(), bitmap.size());
+
+    std::cout << "\nOK\n";
+    return 0;
+
+}
+
+/*
+
 #include "random.h"
 
 void cbox(uint16_t x, uint16_t y, uint16_t w) {
@@ -34,9 +59,11 @@ void slo_box(uint16_t x, uint16_t y, uint16_t w) {
     slo_vline(x + w, y, y + w);
 }
 
-int main() {
+*/
 
-    uint32_t t1, t2;
+/*
+
+uint32_t t1, t2;
 
     std::cout << "*** test harness ***\n\n";
 
@@ -67,10 +94,10 @@ int main() {
     v = system::get_video_state();
 
     //std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page;
-   
+
     std::getchar();
+
     
-    /*
     t1 = system::read_clock_counter();
     for (int x = 0; x < 450; x += 25) {
         for (uint16_t j = 1; j < 10; j += 2) {
@@ -83,43 +110,41 @@ int main() {
     }
     uint32_t t2 = system::read_clock_counter();
     std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
-    */
     
-    t1 = system::read_clock_counter();
-    for (uint16_t j = 1; j < 10; j += 2) {
-        for (uint16_t i = 0; i < 189; i += 11) {
-            //if (i % 2 == 0) {
-            slo_box(i, i, j);
-            //}
-        }
+
+t1 = system::read_clock_counter();
+for (uint16_t j = 1; j < 10; j += 2) {
+    for (uint16_t i = 0; i < 189; i += 11) {
+        //if (i % 2 == 0) {
+        slo_box(i, i, j);
+        //}
     }
-    t2 = system::read_clock_counter();
-    std::cout << t2 - t1 << '\n';
-    
-    //mode6::bline(0, 0, 199, 199);
-    //mode6::bline(0, 0, 0, 199);
-    //mode6::bline(0, 0, 25, 199);
-    //mode6::bline(0, 0, 50, 199);
-    //mode6::bline(0, 0, 199, 0);
-    //mode6::bline(0, 199, 639, 0);
-    /* 
-    t1 = system::read_clock_counter();
-    for (int i = 0; i < 500; ++i) {
-        mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
-    }
-    uint32_t t2 = system::read_clock_counter();
-    std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
-    */
-    std::getchar();
-
-    system::set_video_mode(old.mode);
-
-    v = system::get_video_state();
-
-    std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
-
-    std::cout << std::dec << system::read_clock_counter() << '\n';
-    std::cout << "\nOK\n";
-    return 0;
-
 }
+t2 = system::read_clock_counter();
+std::cout << t2 - t1 << '\n';
+
+//mode6::bline(0, 0, 199, 199);
+//mode6::bline(0, 0, 0, 199);
+//mode6::bline(0, 0, 25, 199);
+//mode6::bline(0, 0, 50, 199);
+//mode6::bline(0, 0, 199, 0);
+//mode6::bline(0, 199, 639, 0);
+
+t1 = system::read_clock_counter();
+for (int i = 0; i < 500; ++i) {
+    mode6::bline(320, 100, random::xorshift32() % 640, random::xorshift32() % 200);
+}
+uint32_t t2 = system::read_clock_counter();
+std::cout << "\n\n\n" << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+std::getchar();
+
+system::set_video_mode(old.mode);
+
+v = system::get_video_state();
+
+std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
+
+std::cout << std::dec << system::read_clock_counter() << '\n';
+
+*/

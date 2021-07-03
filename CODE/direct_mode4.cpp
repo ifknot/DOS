@@ -101,55 +101,29 @@ namespace mode4 {
 		}
 	}
 
-	void paste(cga::point_t p, cga::bitmap& bmp) {
-		assert(p.x < 320 && p.y < 200);
+	uint16_t paste(uint16_t add(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t data[], uint16_t size);) {
+		uint16_t sum;
 		__asm {
 			.8086
-			push	ax
-			push	bx
-			push	cx
-			push	dx
-			push    es
+			push ds
+			push si
+			push cx
+			push ax
 
-			// ax column byte, bx 80 byte row, dl pixel bit 
-			mov		ax, EVEN_LINES
-			mov		bx, p.y		; load y
-			test	bx, 01h		; is it an odd row ?
-			jz		EVEN		; no keep even lines offset
-			mov		ax, ODD_LINES
-	EVEN:	mov		es, ax		; offset into extended segment
-			// mode 4 is 2 bits per pixel
-			// bit to set within column byte is x mod 4
-			mov		ax, p.x		; load x
-			
-			// column byte is x/4
-			shr		ax, 1		; 8086 shift right 2 times
-			shr		ax, 1			
-			// row	= y/2 * 80 bytes per row
-			//		= y * 40
-			//		= y * 0x28
-			//		= y * 101000 = 3 shl, add, 2 shl, add
-			and		bx, 0FFFEh	; remove even / odd row bit from y
-			shl		bx, 1		; 8086 shift left 3 time
-			shl		bx, 1
-			shl		bx, 1
-			mov		cx, bx		; put result in cx
-			shl		cx, 1		; 8086 shift left twice
-			shl		cx, 1
-			add		bx, cx		; add back into bx
-			add		bx, ax		; add in column byte
-			//		select which shifted bitmap to use
-			mov		cx, p.x		
-			and		cx, 03h		; mask off 0011 lower bits(x mod 4)
-			
+			lds		si, arr
+			mov		cx, len
+			cld 
 
-			pop es
-			pop	dx
-			pop	cx
-			pop	bx
-			pop	ax
+			
+			pop ax
+			pop cx
+			pop si
+			pop ds
 		}
+		return sum;
 	}
+
+	
 
 	
 

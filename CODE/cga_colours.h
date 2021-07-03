@@ -20,4 +20,6 @@ namespace cga {
 		yellow = 0xC0
 	};
 
+	typedef std::vector<colour_t> colour_vector_t;
+
 }

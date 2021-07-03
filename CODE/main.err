@@ -1,6 +1,2 @@
-main.cpp(16): Warning! W726: col(1) no reference to formal parameter 'x'
-main.cpp(11): Note! N392: col(20) definition: 'unsigned short x' in 'void cbox( unsigned short, unsigned short, unsigned short )'
-main.cpp(16): Warning! W726: col(1) no reference to formal parameter 'y'
-main.cpp(11): Note! N392: col(32) definition: 'unsigned short y' in 'void cbox( unsigned short, unsigned short, unsigned short )'
-main.cpp(16): Warning! W726: col(1) no reference to formal parameter 'w'
-main.cpp(11): Note! N392: col(44) definition: 'unsigned short w' in 'void cbox( unsigned short, unsigned short, unsigned short )'
+C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'video_adapter_names'
+display_types.h(172): Note! N392: col(21) definition: 'char dos::video_adapter_names[10][255]'
