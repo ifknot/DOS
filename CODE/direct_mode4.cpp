@@ -101,26 +101,37 @@ namespace mode4 {
 		}
 	}
 
-	uint16_t paste(uint16_t add(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t data[], uint16_t size);) {
-		uint16_t sum;
+	void paste(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t data[]) {
 		__asm {
 			.8086
 			push ds
 			push si
 			push cx
 			push ax
+			push es
+			push di
 
-			lds		si, arr
-			mov		cx, len
-			cld 
+			mov		ax, EVEN_LINES
+			mov		bx, y
+			test	bx, 01h
+			jz		EVEN
+			mov		ax, ODD_LINES
+	EVEN:	mov		es, ax
+			lds		si, data		
 
+			mov		cx, w
+			xor		di, di
+			cld
 			
+			rep		movsb 
+
+			pop di
+			pop es
 			pop ax
 			pop cx
 			pop si
 			pop ds
 		}
-		return sum;
 	}
 
 	
