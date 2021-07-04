@@ -112,6 +112,7 @@ namespace mode4 {
 			push	es
 			push	di
 			push	bx
+			push	dx
 
 			mov		ax, EVEN_LINES
 			mov		di, y
@@ -135,7 +136,7 @@ namespace mode4 {
 			lds		si, data	
 			cld
 			mov		bx, h
-	LY:		push	di
+	LY:		mov		dx, di
 			mov		cx, w
 			rep		movsw 
 			dec		bx
@@ -145,21 +146,21 @@ namespace mode4 {
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax 
 
-			pop		di
-			push	di
+			mov		di, dx
 			mov		cx, w
 			rep		movsw
-			pop		di
-			add		di, 50h
+			mov		di, dx
+			add		di, 50h	
 
 			mov		ax, es
-			xor ax, 200h; swap to opposite row video buffer
+			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax
 
 			dec		bx
 			jnz		LY
 
-	END:	pop		bx
+	END:	pop		dx
+			pop		bx
 			pop		di
 			pop		es
 			pop		ax

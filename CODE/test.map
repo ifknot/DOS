@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta Apr  2 2021 00:33:57 (64-bit)
 Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       21/07/04 00:06:28
+Created on:       21/07/04 00:23:38
 Executable Image: test.exe
 creating a DOS executable
 
@@ -25,10 +25,10 @@ Segment                Class          Group          Address         Size
 =======                =====          =====          =======         ====
 
 cga_bitmap_TEXT        CODE           AUTO           0000:0000       0000033c
-direct_mode4_TEXT      CODE           AUTO           0000:033c       000001fb
-direct_mode6_TEXT      CODE           AUTO           0000:0537       00000673
-direct_system_TEXT     CODE           AUTO           0000:0baa       0000030c
-main_TEXT              CODE           AUTO           0000:0eb6       0000028c
+direct_mode4_TEXT      CODE           AUTO           0000:033c       000001ff
+direct_mode6_TEXT      CODE           AUTO           0000:053b       00000673
+direct_system_TEXT     CODE           AUTO           0000:0bae       0000030c
+main_TEXT              CODE           AUTO           0000:0eba       0000028c
 _TEXT                  CODE           AUTO           0000:1150       00003726
 cppdata_TEXT           CODE           AUTO           0000:4876       00000000
 fsregist_TEXT          CODE           AUTO           0000:4876       00000384
@@ -239,23 +239,23 @@ Module: direct_mode4.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode4.cpp)
 0000:03ef+     void __far mode4::xor_plot( short unsigned, short unsigned, cga::colour_t )
 0000:04a2      void __far mode4::paste( short unsigned, short unsigned, short unsigned, short unsigned, char unsigned __far * )
 Module: direct_mode6.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode6.cpp)
-0000:0537+     void __far mode6::plot( short unsigned, short unsigned )
-0000:05e7+     void __far mode6::xor_plot( short unsigned, short unsigned )
-0000:0697+     void __far mode6::vline( short unsigned, short unsigned, short unsigned )
-0000:07a7+     void __far mode6::xor_vline( short unsigned, short unsigned, short unsigned )
-0000:08b7+     void __far mode6::hline( short unsigned, short unsigned, short unsigned )
-0000:09b7+     void __far mode6::xor_hline( short unsigned, short unsigned, short unsigned )
-0000:0ab7+     void __far mode6::bline( short, short, short, short )
+0000:053b+     void __far mode6::plot( short unsigned, short unsigned )
+0000:05eb+     void __far mode6::xor_plot( short unsigned, short unsigned )
+0000:069b+     void __far mode6::vline( short unsigned, short unsigned, short unsigned )
+0000:07ab+     void __far mode6::xor_vline( short unsigned, short unsigned, short unsigned )
+0000:08bb+     void __far mode6::hline( short unsigned, short unsigned, short unsigned )
+0000:09bb+     void __far mode6::xor_hline( short unsigned, short unsigned, short unsigned )
+0000:0abb+     void __far mode6::bline( short, short, short, short )
 Module: direct_system.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.cpp)
-0000:0baa+     bool __far system::detect_8087()
-0000:0bfc+     bool __far system::detect_crtc()
-0000:0c5c+     dos::video_adapter_t __far system::get_video_adapter_type()
-0000:0d1b      void __far system::set_video_mode( dos::video_mode_t )
-0000:0d64      dos::video_state_t __far system::get_video_state()
-0000:0dda+     long unsigned __far system::read_clock_counter()
-0000:0e4d+     void __far system::reset_clock_counter( long unsigned )
+0000:0bae+     bool __far system::detect_8087()
+0000:0c00+     bool __far system::detect_crtc()
+0000:0c60+     dos::video_adapter_t __far system::get_video_adapter_type()
+0000:0d1f      void __far system::set_video_mode( dos::video_mode_t )
+0000:0d68      dos::video_state_t __far system::get_video_state()
+0000:0dde+     long unsigned __far system::read_clock_counter()
+0000:0e51+     void __far system::reset_clock_counter( long unsigned )
 Module: main.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\main.cpp)
-0000:0eb6      main_
+0000:0eba      main_
 Module: C:\WATCOM\lib286\dos\clibl.lib(stk086.asm)
 0000:1155      __STK
 0000:1175*     __STKOVERFLOW_
