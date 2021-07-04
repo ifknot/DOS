@@ -22,8 +22,8 @@ int main() {
 
     std::getchar();
 
-    cga::point_t p(10,10);
-    cga::dim_t d(6,6);
+    cga::point_t p(100,100);
+    cga::dim_t d(6,6); // 48x48
 
     uint8_t bitmap[36] = {
         0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,

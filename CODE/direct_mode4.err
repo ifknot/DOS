@@ -1,2 +1,0 @@
-direct_mode4.cpp(145): Warning! W726: col(9) no reference to formal parameter 'h'
-direct_mode4.cpp(104): Note! N392: col(65) definition: 'unsigned short h' in 'void mode4::paste( unsigned short, unsigned short, unsigned short, unsigned short, unsigned char * )'

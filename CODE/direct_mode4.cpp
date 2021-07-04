@@ -102,14 +102,16 @@ namespace mode4 {
 	}
 
 	void paste(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t data[]) {
+		// set up w / 4 and h / 2
 		__asm {
 			.8086
-			push ds
-			push si
-			push cx
-			push ax
-			push es
-			push di
+			push	ds
+			push	si
+			push	cx
+			push	ax
+			push	es
+			push	di
+			push	bx
 
 			mov		ax, EVEN_LINES
 			mov		di, y
@@ -130,17 +132,40 @@ namespace mode4 {
 			add		di, cx
 			add		di, ax
 
-			lds		si, data		
-			mov		cx, w
+			lds		si, data	
 			cld
+			mov		bx, h
+	LY:		push	di
+			mov		cx, w
 			rep		movsw 
+			dec		bx
+			jz		END
 
-			pop di
-			pop es
-			pop ax
-			pop cx
-			pop si
-			pop ds
+			mov		ax, es
+			xor		ax, 200h	; swap to opposite row video buffer
+			mov		es, ax 
+
+			pop		di
+			push	di
+			mov		cx, w
+			rep		movsw
+			pop		di
+			add		di, 50h
+
+			mov		ax, es
+			xor ax, 200h; swap to opposite row video buffer
+			mov		es, ax
+
+			dec		bx
+			jnz		LY
+
+	END:	pop		bx
+			pop		di
+			pop		es
+			pop		ax
+			pop		cx
+			pop		si
+			pop		ds
 		}
 	}
 
