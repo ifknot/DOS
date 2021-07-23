@@ -4,21 +4,47 @@
 
 
 #include "direct_system.h"
-//#include "direct_mode6.h"
-#include "direct_mode4.h"
+#include "direct_mode6.h"
+//#include "direct_mode4.h"
 
 
 int main() {
 
     std::cout << "*** test harness ***\n\n";
-
-    dos::video_state_t v = system::get_video_state();
-
-    std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
-
+    dos::video_state_t old = system::get_video_state();
+    std::cout << "press a key...";
     std::getchar();
+    system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
 
-    system::set_video_mode(dos::GRAPHICS_4_COLOUR_300x200);
+    uint32_t t1, t2;
+    system::reset_clock_counter(0);
+    t1 = system::read_clock_counter();
+    
+    for (int i = 0; i < 50; ++i) {
+        mode6::bresenham_circle(320, 100, 50);
+    }
+
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << "press a key...";
+    std::getchar();
+    system::set_video_mode(old.mode);
+    std::cout << "\nOK\n";
+    return 0;
+
+}
+
+/*
+
+        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
+        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
+        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
+        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
+        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
+        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF
+
+system::set_video_mode(dos::GRAPHICS_4_COLOUR_300x200);
 
     std::getchar();
 
@@ -35,22 +61,6 @@ int main() {
     };
 
     mode4::paste(p.x, p.y, d.width / 2, d.height, bitmap);
-
-    std::cout << "\nOK\n";
-    return 0;
-
-}
-
-/*
-
-        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
-        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
-        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
-        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF,
-        0x55, 0x00, 0xAA, 0x00, 0xFF, 0x00,
-        0x00, 0x55, 0x00, 0xAA, 0x00, 0xFF
-
-*/
 
 /*
 
@@ -169,5 +179,11 @@ v = system::get_video_state();
 std::cout << std::dec << (int)v.columns << " columns mode " << v.mode << std::hex << " page " << (int)v.page << '\n';
 
 std::cout << std::dec << system::read_clock_counter() << '\n';
+
+*/
+
+/*
+
+
 
 */
