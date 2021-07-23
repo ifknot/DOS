@@ -8,8 +8,11 @@
 
 namespace mode6 {
 
+	static uint16_t ox, oy;
+
 	void plot_point(uint16_t x, uint16_t y) {
 		assert(x < 640 && y < 200);
+		
 		__asm {
 			.8086
 			push	ax
@@ -21,6 +24,38 @@ namespace mode6 {
 			// ax column byte, bx 80 byte row, dl pixel bit 
 			mov		ax, EVEN_LINES	
 			mov		bx, y		; load y
+
+			// Scale to mode6 divide by multiplying by the reciprocal 200/640 
+			// = 0.3125 aprrox 0.333r = .01010101r (binary).
+			// with shifts and adds, round up to avoid the losses, 3 terms for 16 bit accuracy vs speed
+			// from truncation when bits are shifted off to the left :
+			/*
+			mov		cx, bx; y += (y + 2) >> 2
+			add		cx, 2
+			shr		cx, 1
+			shr		cx, 1
+			add		bx, cx
+			mov		cx, bx; y += (y + 8) >> 4
+			add		cx, 8
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			add		bx, cx
+			mov		cx, bx; y += (y + 128) >> 8
+			add		cx, 128
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			shr		cx, 1
+			add		bx, cx
+			shr		bx, 1; x >>= 2
+			shr		bx, 1
+			*/
 			test	bx, 01h		; is it an odd row?
 			jz		EVEN		; no keep even lines offset
 			mov		ax, ODD_LINES	
@@ -629,7 +664,9 @@ namespace mode6 {
 
 	}
 
-	void plot_circle_points(uint16_t xc, uint16_t yc, uint16_t x, uint16_t y) {
+	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r) {
+		int16_t x = 0, y = r;
+		int16_t d = 3 - 2 * r;
 		plot_point(xc + x, yc + y);
 		plot_point(xc - x, yc + y);
 		plot_point(xc + x, yc - y);
@@ -638,12 +675,6 @@ namespace mode6 {
 		plot_point(xc - y, yc + x);
 		plot_point(xc + y, yc - x);
 		plot_point(xc - y, yc - x);
-	}
-
-	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r) {
-		int16_t x = 0, y = r;
-		int16_t d = 3 - 2 * r;
-		plot_circle_points(xc, yc, x, y);
 		while (y >= x) {		// for each pixel draw all eight pixels
 			x++;
 			if (d > 0) {		// check for decision parameter and correspondingly update d, x, y
@@ -653,11 +684,20 @@ namespace mode6 {
 			else {
 				d = d + 4 * x + 6;
 			}
-			plot_circle_points(xc, yc, x, y);
+			plot_point(xc + x, yc + y);
+			plot_point(xc - x, yc + y);
+			plot_point(xc + x, yc - y);
+			plot_point(xc - x, yc - y);
+			plot_point(xc + y, yc + x);
+			plot_point(xc - y, yc + x);
+			plot_point(xc + y, yc - x);
+			plot_point(xc - y, yc - x);
 		}
 	}
 
-	void plot_circle_points_xor(uint16_t xc, uint16_t yc, uint16_t x, uint16_t y) {
+	void bresenham_circle_xor(uint16_t xc, uint16_t yc, uint16_t r) {
+		int16_t x = 0, y = r;
+		int16_t d = 3 - 2 * r;
 		plot_point_xor(xc + x, yc + y);
 		plot_point_xor(xc - x, yc + y);
 		plot_point_xor(xc + x, yc - y);
@@ -666,12 +706,6 @@ namespace mode6 {
 		plot_point_xor(xc - y, yc + x);
 		plot_point_xor(xc + y, yc - x);
 		plot_point_xor(xc - y, yc - x);
-	}
-
-	void bresenham_circle_xor(uint16_t xc, uint16_t yc, uint16_t r) {
-		int16_t x = 0, y = r;
-		int16_t d = 3 - 2 * r;
-		plot_circle_points_xor(xc, yc, x, y);
 		while (y >= x) {		// for each pixel draw all eight pixels
 			x++;
 			if (d > 0) {		// check for decision parameter and correspondingly update d, x, y
@@ -681,7 +715,14 @@ namespace mode6 {
 			else {
 				d = d + 4 * x + 6;
 			}
-			plot_circle_points_xor(xc, yc, x, y);
+			plot_point_xor(xc + x, yc + y);
+			plot_point_xor(xc - x, yc + y);
+			plot_point_xor(xc + x, yc - y);
+			plot_point_xor(xc - x, yc - y);
+			plot_point_xor(xc + y, yc + x);
+			plot_point_xor(xc - y, yc + x);
+			plot_point_xor(xc + y, yc - x);
+			plot_point_xor(xc - y, yc - x);
 		}
 	}
 
