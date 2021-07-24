@@ -12,22 +12,54 @@ int main() {
 
     std::cout << "*** test harness ***\n\n";
     dos::video_state_t old = system::get_video_state();
-    std::cout << "press a key...";
+    std::cout << "press enter...";
     std::getchar();
     system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
 
     uint32_t t1, t2;
     system::reset_clock_counter(0);
+    int redraws = 50;
+
+    std::cout << redraws << " circle redraws = ";
     t1 = system::read_clock_counter();
-    
-    for (int i = 0; i < 50; ++i) {
+    for (int i = 0; i < redraws; ++i) {
         mode6::bresenham_circle(320, 100, 50);
     }
-
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
 
-    std::cout << "press a key...";
+    std::cout << redraws << " scaled circle redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6_scaled::bresenham_circle(320, 300, 50);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << redraws << " box redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6::fast_horizontal_line(270, 370, 50);
+        mode6::fast_horizontal_line(270, 370, 150);
+        mode6::fast_vertical_line(270, 50, 150);
+        mode6::fast_vertical_line(370, 50, 150);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << redraws << " scaled box redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6_scaled ::fast_horizontal_line(270, 370, 250);
+        mode6_scaled::fast_horizontal_line(270, 370, 350);
+        mode6_scaled::fast_vertical_line(270, 250, 350);
+        mode6_scaled::fast_vertical_line(370, 250, 350);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    //-----------------------------------------------------
+    std::cout << "press enter...";
     std::getchar();
     system::set_video_mode(old.mode);
     std::cout << "\nOK\n";
