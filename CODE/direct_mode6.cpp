@@ -26,38 +26,6 @@ namespace mode6 {
 			// ax column byte, bx 80 byte row, dl pixel bit 
 			mov		ax, EVEN_LINES	
 			mov		bx, y		; load y
-
-			// Scale to mode6 divide by multiplying by the reciprocal 200/640 
-			// = 0.3125 aprrox 0.333r = .01010101r (binary).
-			// with shifts and adds, round up to avoid the losses, 3 terms for 16 bit accuracy vs speed
-			// from truncation when bits are shifted off to the left :
-			/*
-			mov		cx, bx; y += (y + 2) >> 2
-			add		cx, 2
-			shr		cx, 1
-			shr		cx, 1
-			add		bx, cx
-			mov		cx, bx; y += (y + 8) >> 4
-			add		cx, 8
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			add		bx, cx
-			mov		cx, bx; y += (y + 128) >> 8
-			add		cx, 128
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			shr		cx, 1
-			add		bx, cx
-			shr		bx, 1; x >>= 2
-			shr		bx, 1
-			*/
 			test	bx, 01h		; is it an odd row?
 			jz		EVEN		; no keep even lines offset
 			mov		ax, ODD_LINES	
@@ -1873,33 +1841,96 @@ MORE:		mov		dx, di; load decision variable D into dx
 
 namespace mode6_scaled_npx {
 
-	int16_t init() {
-		float f = 3.5;
-		int16_t status = 1;
+	static float scale_factor = 0.3125;
+
+	void plot_point(uint16_t x, uint16_t y) {
+		assert(x < 640 && y < 640);
 		__asm {
 			.8086
 			.8087
+			push	ax
+			push	bx
 			push	cx
+			push	dx
+			push    es
 
-			fninit				; no wait initialise the NPX(if there is one)
-			mov		cx, 64h		; idle in an empty loop whilst fninit loads the status word
-L1:			loop	L1
-			fnstsw	status		; save the status word which will reset the lower byte to 0
-			mov		cx, 64h		; idle in an empty loop whilst fnstsw stores the status word
-L2:			loop	L2
-			cmp		status, 0	; is status now 0?
-			jne		END
-			mov		status, 10
-			
-			fld		f	
-			frndint
-			fistp	status
+			// scale y
+			finit
+			fild	y
+			fmul	scale_factor
+			fistp	y
 			fwait
 
-END:		pop		cx
+			// ax column byte, bx 80 byte row, dl pixel bit 
+			mov		ax, EVEN_LINES
+			mov		bx, y; load y
+			test	bx, 01h; is it an odd row ?
+			jz		EVEN; no keep even lines offset
+			mov		ax, ODD_LINES
+			EVEN : mov		es, ax; offset into extended segment
+			// mode 6 is 1 bit per pixel
+			// bit to set within column byte is x mod 8
+			mov		ax, x; load x
+			mov		cx, ax; copy x
+			and cx, 07h; mask off 0111 lower bits(mod 8)
+			mov		dl, 080h; load dl with 10000000
+			shr		dl, cl; shift single bit along by x mod 8
+			// column byte is x/8
+			shr		ax, 1; 8086 shift right 3 times
+			shr		ax, 1
+			shr		ax, 1
+			// row	= y/2 * 80 bytes per row
+			//		= y * 40
+			//		= y * 0x28
+			//		= y * 101000 = 3 shl, add, 2 shl, add
+			and bx, 0FFFEh; remove even / odd row bit from y
+			shl		bx, 1; 8086 shift left 3 time
+			shl		bx, 1
+			shl		bx, 1
+			mov		cx, bx; put result in cx
+			shl		cx, 1; 8086 shift left twice
+			shl		cx, 1
+			add		bx, cx; add back into bx
+			add		bx, ax; add in column byte
+			or es: [bx] , dl; set pixel bit in video buffer
+
+			pop es
+			pop	dx
+			pop	cx
+			pop	bx
+			pop	ax
 		}
-		std::cout << f << '\n';
-		return status;
+	}
+
+	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r) {
+		int16_t x = 0, y = r;
+		int16_t d = 3 - 2 * r;
+		plot_point(xc + x, yc + y);
+		plot_point(xc - x, yc + y);
+		plot_point(xc + x, yc - y);
+		plot_point(xc - x, yc - y);
+		plot_point(xc + y, yc + x);
+		plot_point(xc - y, yc + x);
+		plot_point(xc + y, yc - x);
+		plot_point(xc - y, yc - x);
+		while (y >= x) {		// for each pixel draw all eight pixels
+			x++;
+			if (d > 0) {		// check for decision parameter and correspondingly update d, x, y
+				y--;
+				d = d + 4 * (x - y) + 10;
+			}
+			else {
+				d = d + 4 * x + 6;
+			}
+			plot_point(xc + x, yc + y);
+			plot_point(xc - x, yc + y);
+			plot_point(xc + x, yc - y);
+			plot_point(xc - x, yc - y);
+			plot_point(xc + y, yc + x);
+			plot_point(xc - y, yc + x);
+			plot_point(xc + y, yc - x);
+			plot_point(xc - y, yc - x);
+		}
 	}
 
 }

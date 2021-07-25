@@ -68,8 +68,6 @@ namespace mode6_scaled {
 
 namespace mode6_scaled_npx {
 
-	int16_t init();
-
 	void plot_point(uint16_t x, uint16_t y);
 
 	void plot_point_xor(uint16_t x, uint16_t y);

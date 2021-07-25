@@ -15,7 +15,36 @@ int main() {
     std::cout << "press enter...";
     //-----------------------------------------------------
     
-    std::cout << mode6_scaled_npx::init() << '\n';
+    std::getchar();
+    system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
+
+    uint32_t t1, t2;
+    system::reset_clock_counter(0);
+    int redraws = 50;
+
+    std::cout << redraws << " circle redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6::bresenham_circle(200, 100, 50);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << redraws << " scaled circle redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6_scaled::bresenham_circle(320, 300, 50);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << redraws << " npx scaled circle redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6_scaled_npx::bresenham_circle(440, 320, 50);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
 
     //-----------------------------------------------------
     std::cout << "press enter...";
@@ -28,7 +57,7 @@ int main() {
 
 /*
 
-std::getchar();
+    std::getchar();
     system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
 
     uint32_t t1, t2;
