@@ -52,9 +52,9 @@ namespace mode6_scaled {
 
 	void bresenham_line_xor(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 
-	void box(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+	void fast_box(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
-	void box_xor(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+	void fast_box_xor(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
 	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r);
 
@@ -67,6 +67,8 @@ namespace mode6_scaled {
 }
 
 namespace mode6_scaled_npx {
+
+	int16_t init();
 
 	void plot_point(uint16_t x, uint16_t y);
 

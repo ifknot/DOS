@@ -13,7 +13,22 @@ int main() {
     std::cout << "*** test harness ***\n\n";
     dos::video_state_t old = system::get_video_state();
     std::cout << "press enter...";
+    //-----------------------------------------------------
+    
+    std::cout << mode6_scaled_npx::init() << '\n';
+
+    //-----------------------------------------------------
+    std::cout << "press enter...";
     std::getchar();
+    system::set_video_mode(old.mode);
+    std::cout << "\nOK\n";
+    return 0;
+
+}
+
+/*
+
+std::getchar();
     system::set_video_mode(dos::GRAPHICS_MONOCHROME_640X200);
 
     uint32_t t1, t2;
@@ -76,14 +91,7 @@ int main() {
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
 
-    //-----------------------------------------------------
-    std::cout << "press enter...";
-    std::getchar();
-    system::set_video_mode(old.mode);
-    std::cout << "\nOK\n";
-    return 0;
-
-}
+*/
 
 /*
 

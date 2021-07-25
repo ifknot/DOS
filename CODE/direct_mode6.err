@@ -1,4 +1,4 @@
-direct_mode6.cpp(1878): Warning! W014: col(2) no reference to symbol 'ox'
-direct_mode6.cpp(11): Note! N392: col(25) definition: 'unsigned short mode6::ox'
-direct_mode6.cpp(1878): Warning! W014: col(2) no reference to symbol 'oy'
-direct_mode6.cpp(11): Note! N392: col(29) definition: 'unsigned short mode6::oy'
+direct_mode6.cpp(1907): Warning! W014: col(2) no reference to symbol 'ox'
+direct_mode6.cpp(13): Note! N392: col(25) definition: 'unsigned short mode6::ox'
+direct_mode6.cpp(1907): Warning! W014: col(2) no reference to symbol 'oy'
+direct_mode6.cpp(13): Note! N392: col(29) definition: 'unsigned short mode6::oy'

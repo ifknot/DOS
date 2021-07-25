@@ -3,6 +3,8 @@
 #include <cassert>
 #include <math.h>
 
+#include <iostream>
+
 #define EVEN_LINES	0B800h	// even lines video buffer memory	
 #define ODD_LINES	0BA00h	// odd lines video buffer memory
 
@@ -1871,7 +1873,34 @@ MORE:		mov		dx, di; load decision variable D into dx
 
 namespace mode6_scaled_npx {
 
+	int16_t init() {
+		float f = 3.5;
+		int16_t status = 1;
+		__asm {
+			.8086
+			.8087
+			push	cx
 
+			fninit				; no wait initialise the NPX(if there is one)
+			mov		cx, 64h		; idle in an empty loop whilst fninit loads the status word
+L1:			loop	L1
+			fnstsw	status		; save the status word which will reset the lower byte to 0
+			mov		cx, 64h		; idle in an empty loop whilst fnstsw stores the status word
+L2:			loop	L2
+			cmp		status, 0	; is status now 0?
+			jne		END
+			mov		status, 10
+			
+			fld		f	
+			frndint
+			fistp	status
+			fwait
+
+END:		pop		cx
+		}
+		std::cout << f << '\n';
+		return status;
+	}
 
 }
 
