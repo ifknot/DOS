@@ -18,12 +18,12 @@ int main() {
 
     uint32_t t1, t2;
     system::reset_clock_counter(0);
-    int redraws = 50;
+    int redraws = 10;
 
     std::cout << redraws << " circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::bresenham_circle(320, 100, 50);
+        mode6::bresenham_circle(200, 100, 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
@@ -39,10 +39,10 @@ int main() {
     std::cout << redraws << " box redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::fast_horizontal_line(270, 370, 50);
-        mode6::fast_horizontal_line(270, 370, 150);
-        mode6::fast_vertical_line(270, 50, 150);
-        mode6::fast_vertical_line(370, 50, 150);
+        mode6::fast_horizontal_line(150, 250, 50);
+        mode6::fast_horizontal_line(150, 250, 150);
+        mode6::fast_vertical_line(150, 50, 150);
+        mode6::fast_vertical_line(250, 50, 150);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
@@ -54,6 +54,24 @@ int main() {
         mode6_scaled::fast_horizontal_line(270, 370, 350);
         mode6_scaled::fast_vertical_line(270, 250, 350);
         mode6_scaled::fast_vertical_line(370, 250, 350);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << redraws << " line redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6::bresenham_line(150, 50, 250, 150);
+        mode6::bresenham_line(250, 50, 150, 150);
+    }
+    t2 = system::read_clock_counter();
+    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+
+    std::cout << redraws << " scaled line redraws = ";
+    t1 = system::read_clock_counter();
+    for (int i = 0; i < redraws; ++i) {
+        mode6_scaled::bresenham_line(270, 250, 370, 350);
+        mode6_scaled::bresenham_line(370, 250, 270, 350);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
