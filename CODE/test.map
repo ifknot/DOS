@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta Apr  2 2021 00:33:57 (64-bit)
 Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       21/07/25 19:40:37
+Created on:       21/07/26 23:03:19
 Executable Image: test.exe
 creating a DOS executable
 
@@ -271,8 +271,8 @@ Module: direct_system.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.cpp)
 Module: main.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\main.cpp)
 0000:2140      main_
 Module: C:\WATCOM\lib286\plbxl.lib(cppdata.cpp)
-0f65:1e34      __wint_thread_data
-0f65:1e58      __compiled_under_generic
+0f65:1e30      __wint_thread_data
+0f65:1e54      __compiled_under_generic
 Module: C:\WATCOM\lib286\plbxl.lib(fsregist.cpp)
 0000:2630+     __wcpp_4_dispatch_dummy__
 0000:2669      __wcpp_4_fs_lookup__

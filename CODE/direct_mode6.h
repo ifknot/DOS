@@ -2,6 +2,30 @@
 
 #include <stdint.h>
 
+#include <cassert>
+
+#define EVEN_LINES	0B800h	
+#define ODD_LINES	0BA00h
+
+#define PLOT_PUSH \
+__asm	.8086			\
+__asm	push	ax		\
+__asm	push	bx		\
+__asm	push	cx		\
+__asm	push	dx		\
+__asm	push    es		
+
+#define PLOT_POP \
+__asm	pop		es		\
+__asm	pop		dx		\
+__asm	pop		cx		\
+__asm	pop		bx		\
+__asm	pop		ax		
+
+#define OR_PIXEL	__asm	or		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl 
+
+#define XOR_PIXEL	__asm	xor		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl
+
 namespace mode6 {
 
 	void plot_point(uint16_t x, uint16_t y);
