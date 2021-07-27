@@ -38,7 +38,7 @@ namespace mode6 {
 		__asm {
 			PLOT_PUSH
 			MODE6_XY
-			OR_PIXEL
+			PLOT_OR
 			PLOT_POP
 		}
 	}
@@ -48,7 +48,7 @@ namespace mode6 {
 		__asm {
 			PLOT_PUSH
 			MODE6_XY
-			XOR_PIXEL
+			PLOT_XOR
 			PLOT_POP
 		}
 	}
@@ -81,7 +81,7 @@ namespace mode6 {
 			shl		cx, 1	
 			add		bx, cx			; add back into bx 
 			add		bx, ax			; add in column byte
-			OR_PIXEL
+			PLOT_OR
 
 			mov		cx, y2		
 			sub		cx, y1		; cx is now line length
@@ -93,13 +93,13 @@ namespace mode6 {
 	ODD:	mov		ax, es		; plot vertical points starting in odd segment
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax		; store segment
-			OR_PIXEL
+			PLOT_OR
 			dec		cx			; next row
 			jz		END			; last row?
 			mov		ax, es		; load segment
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax		; store flipped segment
-			OR_PIXEL
+			PLOT_OR
 			add		bx, 50h		; post-increment bx to next row
 			loop	ODD			; next row
 			jmp		END			; last row
@@ -107,14 +107,14 @@ namespace mode6 {
 	EVEN:	mov		ax, es		; plot vertical points starting in even segment
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax		; store segment
-			OR_PIXEL
+			PLOT_OR
 			dec		cx			; next row
 			jz		END			; last row?
 			mov		ax, es		; load segment
 			xor		ax, 200h	; swap to opposite row video buffer
 			mov		es, ax		; store segment
 			add		bx, 50h		; pre-increment bx to next row
-			OR_PIXEL
+			PLOT_OR
 			loop	EVEN		; next row
 
 	END:	PLOT_POP
