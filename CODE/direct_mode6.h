@@ -58,6 +58,12 @@ __asm	add		bx, ax
 	if (x > 639) return; \
 	if (y > 199) return;
 
+#define CLIP_TORUS(yscale) \
+	if (x < 0) x = 640 + x; \
+	if (y < 0) y = yscale + y; \
+	if (x > 639) x = x - 640; \
+	if (y >= yscale) y = y - yscale;
+
 namespace mode6 {
 
 	enum plot_mode {plot_or, plot_xor };
@@ -82,6 +88,104 @@ namespace mode6 {
 			}
 		}
 	};
+
+	class gfx< plot_xor, clip_border, scale_none > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_BORDER
+				__asm {
+				PLOT_PUSH
+				MODE6_XY
+				PLOT_XOR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_or, clip_torus, scale_none > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_TORUS(200)
+				__asm {
+				PLOT_PUSH
+				MODE6_XY
+				PLOT_OR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_xor, clip_torus, scale_none > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_TORUS(200)
+				__asm {
+				PLOT_PUSH
+				MODE6_XY
+				PLOT_XOR
+				PLOT_POP
+			}
+		}
+	};
+
+	/*------------------------------------------------------*/
+
+	class gfx< plot_or, clip_border, scale_third > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_BORDER
+				__asm {
+				PLOT_PUSH
+				//SCALE_THIRD
+				MODE6_XY
+				PLOT_OR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_xor, clip_border, scale_third > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_BORDER
+				__asm {
+				PLOT_PUSH
+				//SCALE_THIRD
+				MODE6_XY
+				PLOT_XOR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_or, clip_torus, scale_third > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_TORUS(200)
+				__asm {
+				PLOT_PUSH
+				//SCALE_THIRD
+				MODE6_XY
+				PLOT_OR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_xor, clip_torus, scale_third > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_TORUS(200)
+				__asm {
+				PLOT_PUSH
+				//SCALE_THIRD
+				MODE6_XY
+				PLOT_XOR
+				PLOT_POP
+			}
+		}
+	};
+
 
 	void plot_point(uint16_t x, uint16_t y);
 
