@@ -1,1 +1,2 @@
-direct_mode6.cpp(600): Error! E927: col(26) syntax error: '::plot_point' has not been declared
+direct_mode6.h(57): Warning! W146: col(50) unexpected storage class specifier found
+direct_mode6.h(57): Note! N393: col(50) included from direct_mode6.cpp(1)

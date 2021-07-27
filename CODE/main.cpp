@@ -26,7 +26,7 @@ int main() {
     std::cout << redraws << " circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::bresenham_circle(200, 100, 50);
+        mode6::bresenham_circle<mode6::plot_xor>(200, 100, 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";

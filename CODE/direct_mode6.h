@@ -54,6 +54,8 @@ __asm	add		bx, ax
 
 namespace mode6 {
 
+	enum plot_mode {plot_or, plot_xor};
+
 	template< int default_mode >
 	class gfx {
 	public:
@@ -68,7 +70,7 @@ namespace mode6 {
 		}
 	};
 
-	class gfx< 1 > {
+	class gfx< plot_xor > {
 	public:
 		static inline void plot_point(uint16_t x, uint16_t y) {
 			assert(x < 640 && y < 200);
@@ -101,7 +103,37 @@ namespace mode6 {
 
 	void fast_box_xor(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
-	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r);
+	template<int mode>
+	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r) {
+		int16_t x = 0, y = r;
+		int16_t d = 3 - 2 * r;
+		gfx<mode>::plot_point(xc + x, yc + y);
+		plot_point(xc - x, yc + y);
+		plot_point(xc + x, yc - y);
+		plot_point(xc - x, yc - y);
+		plot_point(xc + y, yc + x);
+		plot_point(xc - y, yc + x);
+		plot_point(xc + y, yc - x);
+		plot_point(xc - y, yc - x);
+		while (y >= x) {		// for each pixel draw all eight pixels
+			x++;
+			if (d > 0) {		// check for decision parameter and correspondingly update d, x, y
+				y--;
+				d = d + 4 * (x - y) + 10;
+			}
+			else {
+				d = d + 4 * x + 6;
+			}
+			gfx<mode>::plot_point(xc + x, yc + y);
+			plot_point(xc - x, yc + y);
+			plot_point(xc + x, yc - y);
+			plot_point(xc - x, yc - y);
+			plot_point(xc + y, yc + x);
+			plot_point(xc - y, yc + x);
+			plot_point(xc + y, yc - x);
+			plot_point(xc - y, yc - x);
+		}
+	}
 
 	void bresenham_circle_xor(uint16_t xc, uint16_t yc, uint16_t r);
 
