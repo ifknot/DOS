@@ -22,6 +22,33 @@ __asm	pop		cx		\
 __asm	pop		bx		\
 __asm	pop		ax		
 
+#define MODE6_XY \
+__asm	mov		ax, EVEN_LINES \
+__asm	mov		bx, y \
+__asm	mov		ax, EVEN_LINES \
+__asm	mov		bx, y \
+__asm	test	bx, 1h \
+__asm	jz		YES \
+__asm	mov		ax, ODD_LINES \
+__asm	YES:	mov	es, ax \
+__asm	mov		ax, x \
+__asm	mov		cx, ax \
+__asm	and		cx, 7h \
+__asm	mov		dl, 80h \
+__asm	shr		dl, cl \
+__asm	shr		ax, 1 \
+__asm	shr		ax, 1 \
+__asm	shr		ax, 1 \
+__asm and bx, 0FFFEh \
+__asm	shl		bx, 1 \
+__asm	shl		bx, 1 \
+__asm	shl		bx, 1 \
+__asm	mov		cx, bx \
+__asm	shl		cx, 1 \
+__asm	shl		cx, 1 \
+__asm	add		bx, cx \
+__asm	add		bx, ax
+
 #define OR_PIXEL	__asm	or		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl 
 
 #define XOR_PIXEL	__asm	xor		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl

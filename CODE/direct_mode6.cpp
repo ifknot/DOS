@@ -8,13 +8,8 @@ namespace mode6 {
 	*		= y * 0x28
 	*		= y * 101000
 	*  i.e. 3 shl, add, 2 shl, add.
-	*/
-	void plot_point(uint16_t x, uint16_t y) {
-		assert(x < 640 && y < 200);
-		__asm {
-			PLOT_PUSH
-
-			mov		ax, EVEN_LINES	; assume even lines segment
+	* 
+	*		mov		ax, EVEN_LINES	; assume even lines segment
 			mov		bx, y			; load y 
 			test	bx, 1h			; is it even ?
 			jz		YES				; yes jump
@@ -37,6 +32,14 @@ namespace mode6 {
 			shl		cx, 1	
 			add		bx, cx			; add back into bx 
 			add		bx, ax			; add in column byte
+	*/
+	void plot_point(uint16_t x, uint16_t y) {
+		assert(x < 640 && y < 200);
+		__asm {
+			PLOT_PUSH
+
+			MODE6_XY
+			
 	
 			OR_PIXEL
 			PLOT_POP

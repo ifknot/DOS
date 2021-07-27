@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta Apr  2 2021 00:33:57 (64-bit)
 Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       21/07/26 23:03:19
+Created on:       21/07/27 17:36:13
 Executable Image: test.exe
 creating a DOS executable
 
@@ -26,7 +26,7 @@ Segment                Class          Group          Address         Size
 
 cga_bitmap_TEXT        CODE           AUTO           0000:0000       0000032b
 direct_mode4_TEXT      CODE           AUTO           0000:0330       000001e4
-direct_mode6_TEXT      CODE           AUTO           0000:0520       00001931
+direct_mode6_TEXT      CODE           AUTO           0000:0520       00001939
 direct_system_TEXT     CODE           AUTO           0000:1e60       000002d4
 main_TEXT              CODE           AUTO           0000:2140       000004f0
 cppdata_TEXT           CODE           AUTO           0000:2630       00000000
@@ -239,27 +239,27 @@ Module: direct_mode4.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode4.cpp)
 0000:0484+     void __far mode4::paste( short unsigned, short unsigned, short unsigned, short unsigned, char unsigned __far * )
 Module: direct_mode6.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_mode6.cpp)
 0000:0520+     void __far mode6::plot_point( short unsigned, short unsigned )
-0000:05c6+     void __far mode6::plot_point_xor( short unsigned, short unsigned )
-0000:066c+     void __far mode6::fast_vertical_line( short unsigned, short unsigned, short unsigned )
-0000:0772+     void __far mode6::fast_vertical_line_xor( short unsigned, short unsigned, short unsigned )
-0000:0878+     void __far mode6::fast_horizontal_line( short unsigned, short unsigned, short unsigned )
-0000:096e+     void __far mode6::fast_horizontal_line_xor( short unsigned, short unsigned, short unsigned )
-0000:0a64+     void __far mode6::bresenham_line( short, short, short, short )
-0000:0b4e+     void __far mode6::bresenham_line_xor( short, short, short, short )
-0000:0c38      void __far mode6::bresenham_circle( short unsigned, short unsigned, short unsigned )
-0000:0db8+     void __far mode6::bresenham_circle_xor( short unsigned, short unsigned, short unsigned )
-0000:0f38+     void __far mode6_scaled::plot_point( short unsigned, short unsigned )
-0000:1014+     void __far mode6_scaled::plot_point_xor( short unsigned, short unsigned )
-0000:10f0+     void __far mode6_scaled::fast_vertical_line( short unsigned, short unsigned, short unsigned )
-0000:1272+     void __far mode6_scaled::fast_vertical_line_xor( short unsigned, short unsigned, short unsigned )
-0000:13f4+     void __far mode6_scaled::fast_horizontal_line( short unsigned, short unsigned, short unsigned )
-0000:1520+     void __far mode6_scaled::fast_horizontal_line_xor( short unsigned, short unsigned, short unsigned )
-0000:164c+     void __far mode6_scaled::bresenham_line( short, short, short, short )
-0000:17b2+     void __far mode6_scaled::bresenham_line_xor( short, short, short, short )
-0000:1918      void __far mode6_scaled::bresenham_circle( short unsigned, short unsigned, short unsigned )
-0000:1a98+     void __far mode6_scaled::bresenham_circle_xor( short unsigned, short unsigned, short unsigned )
-0000:1c18+     void __far mode6_scaled_npx::plot_point( short unsigned, short unsigned )
-0000:1cd2      void __far mode6_scaled_npx::bresenham_circle( short unsigned, short unsigned, short unsigned )
+0000:05ce+     void __far mode6::plot_point_xor( short unsigned, short unsigned )
+0000:0674+     void __far mode6::fast_vertical_line( short unsigned, short unsigned, short unsigned )
+0000:077a+     void __far mode6::fast_vertical_line_xor( short unsigned, short unsigned, short unsigned )
+0000:0880+     void __far mode6::fast_horizontal_line( short unsigned, short unsigned, short unsigned )
+0000:0976+     void __far mode6::fast_horizontal_line_xor( short unsigned, short unsigned, short unsigned )
+0000:0a6c+     void __far mode6::bresenham_line( short, short, short, short )
+0000:0b56+     void __far mode6::bresenham_line_xor( short, short, short, short )
+0000:0c40      void __far mode6::bresenham_circle( short unsigned, short unsigned, short unsigned )
+0000:0dc0+     void __far mode6::bresenham_circle_xor( short unsigned, short unsigned, short unsigned )
+0000:0f40+     void __far mode6_scaled::plot_point( short unsigned, short unsigned )
+0000:101c+     void __far mode6_scaled::plot_point_xor( short unsigned, short unsigned )
+0000:10f8+     void __far mode6_scaled::fast_vertical_line( short unsigned, short unsigned, short unsigned )
+0000:127a+     void __far mode6_scaled::fast_vertical_line_xor( short unsigned, short unsigned, short unsigned )
+0000:13fc+     void __far mode6_scaled::fast_horizontal_line( short unsigned, short unsigned, short unsigned )
+0000:1528+     void __far mode6_scaled::fast_horizontal_line_xor( short unsigned, short unsigned, short unsigned )
+0000:1654+     void __far mode6_scaled::bresenham_line( short, short, short, short )
+0000:17ba+     void __far mode6_scaled::bresenham_line_xor( short, short, short, short )
+0000:1920      void __far mode6_scaled::bresenham_circle( short unsigned, short unsigned, short unsigned )
+0000:1aa0+     void __far mode6_scaled::bresenham_circle_xor( short unsigned, short unsigned, short unsigned )
+0000:1c20+     void __far mode6_scaled_npx::plot_point( short unsigned, short unsigned )
+0000:1cda      void __far mode6_scaled_npx::bresenham_circle( short unsigned, short unsigned, short unsigned )
 Module: direct_system.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.cpp)
 0000:1e60+     bool __far system::detect_8087()
 0000:1eaa+     bool __far system::detect_crtc()
@@ -818,4 +818,4 @@ C:\WATCOM\lib286\dos\clibl.lib
 Stack size:  0800 (2048.)
 Memory size:  00012040 (73792.)
 Entry point address: 0000:2e64
-Link time: 00:00.10
+Link time: 00:00.11
