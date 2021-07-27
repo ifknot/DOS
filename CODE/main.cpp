@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cstdio>
 
+#define MODE 1
 
 #include "direct_system.h"
 #include "direct_mode6.h"
@@ -20,7 +21,7 @@ int main() {
 
     uint32_t t1, t2;
     system::reset_clock_counter(0);
-    int redraws = 50;
+    int redraws = 5;
 
     std::cout << redraws << " circle redraws = ";
     t1 = system::read_clock_counter();

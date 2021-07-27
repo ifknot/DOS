@@ -37,10 +37,7 @@ namespace mode6 {
 		assert(x < 640 && y < 200);
 		__asm {
 			PLOT_PUSH
-
 			MODE6_XY
-			
-	
 			OR_PIXEL
 			PLOT_POP
 		}
@@ -50,31 +47,7 @@ namespace mode6 {
 		assert(x < 640 && y < 200);
 		__asm {
 			PLOT_PUSH
-
-			mov		ax, EVEN_LINES	; assume even lines segment
-			mov		bx, y			; load y 
-			test	bx, 1h			; is it even ?
-			jz		YES				; yes jump
-			mov		ax, ODD_LINES	; otherwise load odd lines segment
-	YES:	mov		es, ax			; transer segment into es
-			mov		ax, x			; load x 
-			mov		cx, ax			; copy of x 
-			and		cx, 7h			; mask off 0111 lower bits i.e.mod 8 (thanks powers of 2) 
-			mov		dl, 80h			; load dl with a single pixel at msb 10000000 
-			shr		dl, cl			; shift single bit along by x mod 8
-			shr		ax, 1			; calculate column byte x / 8 
-			shr		ax, 1				
-			shr		ax, 1	
-			and		bx, 0FFFEh		; mask out even / odd row bit from y 
-			shl		bx, 1			; 8086 shift left 3 time 
-			shl		bx, 1			
-			shl		bx, 1	
-			mov		cx, bx			; temp result in cx 
-			shl		cx, 1			; 8086 shift left twice 
-			shl		cx, 1	
-			add		bx, cx			; add back into bx 
-			add		bx, ax			; add in column byte
-	
+			MODE6_XY
 			XOR_PIXEL
 			PLOT_POP
 		}
@@ -624,7 +597,7 @@ namespace mode6 {
 	void bresenham_circle(uint16_t xc, uint16_t yc, uint16_t r) {
 		int16_t x = 0, y = r;
 		int16_t d = 3 - 2 * r;
-		plot_point(xc + x, yc + y);
+		gfx<1>::plot_point(xc + x, yc + y);
 		plot_point(xc - x, yc + y);
 		plot_point(xc + x, yc - y);
 		plot_point(xc - x, yc - y);
@@ -641,7 +614,7 @@ namespace mode6 {
 			else {
 				d = d + 4 * x + 6;
 			}
-			plot_point(xc + x, yc + y);
+			gfx<1>::plot_point(xc + x, yc + y);
 			plot_point(xc - x, yc + y);
 			plot_point(xc + x, yc - y);
 			plot_point(xc - x, yc - y);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdint.h>
-
 #include <cassert>
 
 #define EVEN_LINES	0B800h	
@@ -54,6 +53,33 @@ __asm	add		bx, ax
 #define XOR_PIXEL	__asm	xor		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl
 
 namespace mode6 {
+
+	template< int default_mode >
+	class gfx {
+	public:
+		static inline void plot_point(uint16_t x, uint16_t y) {
+			assert(x < 640 && y < 200);
+			__asm {
+				PLOT_PUSH
+				MODE6_XY
+				OR_PIXEL
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< 1 > {
+	public:
+		static inline void plot_point(uint16_t x, uint16_t y) {
+			assert(x < 640 && y < 200);
+			__asm {
+				PLOT_PUSH
+				MODE6_XY
+				XOR_PIXEL
+				PLOT_POP
+			}
+		}
+	};
 
 	void plot_point(uint16_t x, uint16_t y);
 
