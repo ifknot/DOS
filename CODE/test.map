@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta Apr  2 2021 00:33:57 (64-bit)
 Copyright (c) 2002-2021 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       21/07/27 21:49:26
+Created on:       21/07/27 21:53:25
 Executable Image: test.exe
 creating a DOS executable
 
@@ -268,8 +268,8 @@ Module: direct_system.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\direct_system.cpp)
 0000:1ef8      long unsigned __far system::read_clock_counter()
 0000:1f64      void __far system::reset_clock_counter( long unsigned )
 Module: main.obj(C:\Users\ifkno\DOSBOX\DOS16\CODE\main.cpp)
-0000:24c0+     void __far mode6::gfx<1,1,0>::plot_point( short, short )
-0000:2560+     void __far mode6::bresenham_circle<1,1,0>( short unsigned, short unsigned, short unsigned )
+0000:24c0+     void __far mode6::gfx<0,1,0>::plot_point( short, short )
+0000:2560+     void __far mode6::bresenham_circle<0,1,0>( short unsigned, short unsigned, short unsigned )
 0000:1fd0      main_
 Module: C:\WATCOM\lib286\plbxl.lib(cppdata.cpp)
 0f71:1e30      __wint_thread_data

@@ -70,6 +70,9 @@ namespace mode6 {
 	enum clip_mode { clip_border, clip_torus};
 	enum scale_mode { scale_none, scale_third, scale_npx };
 
+	// template factory compile time select optimised asm gfx function(s)
+	/*------------------------------------------------------*/
+
 	template< int default_mode, int default_clip, int default_scale >
 	class gfx {
 	public:
@@ -186,6 +189,63 @@ namespace mode6 {
 		}
 	};
 
+	/*------------------------------------------------------*/
+
+	class gfx< plot_or, clip_border, scale_npx > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_BORDER
+				__asm {
+				PLOT_PUSH
+				//SCALE_NPX
+				MODE6_XY
+				PLOT_OR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_xor, clip_border, scale_npx > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_BORDER
+				__asm {
+				PLOT_PUSH
+				//SCALE_NPX
+				MODE6_XY
+				PLOT_XOR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_or, clip_torus, scale_npx > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_TORUS(200)
+				__asm {
+				PLOT_PUSH
+				//SCALE_NPX
+				MODE6_XY
+				PLOT_OR
+				PLOT_POP
+			}
+		}
+	};
+
+	class gfx< plot_xor, clip_torus, scale_npx > {
+	public:
+		static inline void plot_point(int16_t x, int16_t y) {
+			CLIP_TORUS(200)
+				__asm {
+				PLOT_PUSH
+				//SCALE_NPX
+				MODE6_XY
+				PLOT_XOR
+				PLOT_POP
+			}
+		}
+	};
 
 	void plot_point(uint16_t x, uint16_t y);
 
