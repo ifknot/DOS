@@ -34,7 +34,7 @@ int main() {
     std::cout << redraws << " scaled circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6_scaled::bresenham_circle(320, 300, 50);
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_third>(150, 100, 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
@@ -42,7 +42,7 @@ int main() {
     std::cout << redraws << " npx scaled circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6_scaled_npx::bresenham_circle(440, 320, 50);
+        //mode6_scaled_npx::bresenham_circle(440, 320, 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
