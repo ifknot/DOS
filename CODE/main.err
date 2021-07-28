@@ -1,3 +1,3 @@
-main.cpp(158): Warning! W015: col(3) nested comment found in comment started on line 131
+main.cpp(159): Warning! W015: col(3) nested comment found in comment started on line 132
 C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'video_adapter_names'
 display_types.h(172): Note! N392: col(21) definition: 'char dos::video_adapter_names[10][255]'

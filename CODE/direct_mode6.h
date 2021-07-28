@@ -11,7 +11,7 @@ __asm	fmul	scale_	\
 __asm	fistp	y_		\
 __asm	fwait
 
-#define PLOT_PUSH \
+#define PLOT_PUSH \ 
 __asm	.8086			\
 __asm	push	ax		\
 __asm	push	bx		\
@@ -144,6 +144,26 @@ __asm	mov		y_, bx
 	if (y >= yscale_) y = y - yscale_;
 
 namespace mode6 {
+
+	inline void cls() {
+		__asm {
+			.8086
+			mov		ax, EVEN_LINES
+			mov		es, ax
+			xor		ax, ax
+			xor		di, di
+			cld
+			mov		cx, 1000h
+			rep		stosw
+			mov		ax, ODD_LINES
+			mov		es, ax
+			xor ax, ax
+			xor di, di
+			cld
+			mov		cx, 1000h
+			rep		stosw
+		}
+	}
 
 	enum plot_mode {plot_or, plot_xor };
 	enum clip_mode { clip_border, clip_torus};
