@@ -21,12 +21,14 @@ int main() {
 
     uint32_t t1, t2;
     system::reset_clock_counter(0);
-    int redraws = 5;
+    int redraws = 50;
 
     std::cout << redraws << " circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_none>(25, 100, 50);
+        int16_t x = 25 - (i * 5);
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_none>(x, 100, 50);
+        mode6::bresenham_circle<mode6::plot_xor, mode6::clip_torus, mode6::scale_none>(x, 100, 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
@@ -34,7 +36,9 @@ int main() {
     std::cout << redraws << " scaled circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_third>(150, 100, 50);
+        int16_t y = 50 - (i * 5);
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_third>(320, y, 50);
+        mode6::bresenham_circle<mode6::plot_xor, mode6::clip_torus, mode6::scale_third>(320, y, 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
@@ -42,7 +46,8 @@ int main() {
     std::cout << redraws << " npx scaled circle redraws = ";
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        //mode6_scaled_npx::bresenham_circle(440, 320, 50);
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 50);
+        mode6::bresenham_circle<mode6::plot_xor, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 50);
     }
     t2 = system::read_clock_counter();
     std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
