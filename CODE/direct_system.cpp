@@ -34,6 +34,7 @@ namespace system {
 			push	cx
 			push	dx
 
+			mov		dx, 3DAh
 			mov     al, 0Fh
 			out     dx, al		; select 6845 reg 0Fh(Cursor Low)
 			inc     dx

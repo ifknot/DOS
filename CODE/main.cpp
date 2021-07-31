@@ -21,12 +21,14 @@ int main() {
 
     uint32_t t1, t2;
     system::reset_clock_counter(0);
-    int redraws = 50;
+    int redraws = 200;
 
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        int16_t x = 25 - (i * 5);
-        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_none>(x, 100, 50);
+        int16_t x = 0 + (i * 5);
+        mode6::sync();
+        mode6::gfx<mode6::plot_or, mode6::clip_torus, mode6::scale_none>::draw_line(x, 100, x + 10, 110);
+        //mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_none>(x, 100, 10);
         mode6::cls();
     }
     t2 = system::read_clock_counter();
@@ -35,16 +37,19 @@ int main() {
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
         int16_t y = 50 - (i * 5);
-        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_third>(320, y, 50);
-        mode6::cls();
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_third>(320, y, 10);
+        mode6::bresenham_circle<mode6::plot_xor, mode6::clip_torus, mode6::scale_third>(320, y, 10);
     }
     t2 = system::read_clock_counter();
     float b = (float)(t2 - t1) / 18.206;
 
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 50);
-        mode6::cls();
+        mode6::sync();
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 10);
+        mode6::sync();
+        mode6::bresenham_circle<mode6::plot_xor, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 10);
+
     }
     t2 = system::read_clock_counter();
 
