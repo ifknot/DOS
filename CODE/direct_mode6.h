@@ -109,7 +109,7 @@ __asm	shl		cx, 1	\
 __asm	add		bx, cx	\
 __asm	add		bx, ax
 
-#define MODE6_BXY() \
+#define MODE6_BXY \
 __asm	mov		cx, EVEN_LINES	\
 __asm	test	bx, 01h	\
 __asm	jz		EVEN	\
@@ -170,6 +170,53 @@ __asm	shr		bx, 1	\
 __asm	shr		bx, 1	\
 __asm	mov		y_, bx	
 
+#define DELTAS \
+__asm	mov		ax, x1	\
+__asm	mov		bx, y1	\
+__asm	mov		step_x, -1		\
+__asm	sub		ax, x2	\
+__asm	jge		NEGX	\
+__asm	neg		ax		\
+__asm	neg		step_x	\
+__asm	NEGX:	mov	delta_x, ax	\
+__asm	mov		step_y, -1		\
+__asm	sub		bx, y2	\
+__asm	jge		NEGY	\
+__asm	neg		bx		\
+__asm	neg		step_y	\
+__asm	NEGY:	mov	delta_y, bx	\
+__asm	inc		ax		\
+__asm	mov		cx, ax	\
+__asm	shr		ax, 1	\
+__asm	sub		ax, bx	\
+__asm	mov		i1, ax	\
+__asm	inc		bx		\
+__asm	mov		dx, bx	\
+__asm	shr		bx, 1	\
+__asm	sub		bx, cx	\
+__asm	inc		bx		\
+__asm	neg		bx		\
+__asm	mov		i2, bx	\
+__asm	cmp		cx, dx	\
+__asm	jge		BIGX	\
+__asm	mov		cx, dx	\
+__asm	BIGX:	mov	ax, x1		\
+__asm	mov		bx, y1	\
+__asm	mov		si, i1	\
+__asm	xor		di, di		
+
+#define LEASTD \
+__asm	mov		dx, di	\
+__asm	cmp		dx, si	\
+__asm	jl		HZ		\
+__asm	add		bx, step_y		\
+__asm	sub		dx, delta_x		\
+__asm	cmp		di, i2	\
+__asm	jg		NDIAG	\
+__asm	HZ:		add	ax, step_x	\
+__asm	add		dx, delta_y		\
+__asm	NDIAG:	mov	di, dx
+
 #define CLIP_BORDER(x_, y_, xscale_, yscale_) \
 	if (x_ < 0) return; \
 	if (y_ < 0) return; \
@@ -216,6 +263,15 @@ L2:			in		al, dx
 L1:			in		al, dx
 			test	al, 1h
 			jz		L1
+		}
+	}
+
+	inline void wait() {
+		__asm {
+			.8086
+			mov		cx, 0FFFh
+L1:			nop
+			loop	L1
 		}
 	}
 
@@ -286,67 +342,14 @@ L1:			in		al, dx
 			__asm {
 				.8086
 				LINE_PUSH
-
-				// calculate deltas, steps and distance limits
-				mov		ax, x1; load starting point x
-				mov		bx, y1; load starting point y
-				// is it a positive or negative x direction?
-				mov		step_x, -1; assume - ve x direction
-				sub		ax, x2; calculate delta x
-				jge		NEGX; yes - ve x direction so calculate y direction
-				neg		ax; abs(delta x)
-				neg		step_x; +ve x direction
-				// is it a positive or negative y direction?
-				NEGX : mov		delta_x, ax; store delta x
-				mov		step_y, -1; assume - ve y direction
-				sub		bx, y2; calculate delta y
-				jge		NEGY; yes - ve y direction
-				neg		bx; abs(delta y)
-				neg		step_y; +ve y direction
-				NEGY : mov		delta_y, bx; store delta y
-				// delta x in bx, delta y in ax
-				inc		ax
-				mov		cx, ax; save x repeat count
-				shr		ax, 1; i1 = -delta_y + (delta_x + 1) div 2
-				sub		ax, bx
-				mov		i1, ax; store i1
-				inc		bx
-				mov		dx, bx; save y repeat count
-				shr		bx, 1; i2 = delta_x - (delta_y + 1) div 2
-				sub		bx, cx; adjust possible repeat count
-				inc		bx
-				neg		bx
-				mov		i2, bx; store i1
-				cmp		cx, dx; repeat count max(delta_x + 1, delta_y + 1)
-				jge		BIGX; delta_x is bigger
-				mov		cx, dx; delta_y is bigger
-				// assume distance limit decision variable D = 0 and x,y start point
-				// maximise use 8086 limited no. registers (6 ie AX BX CX DX SI DI) to improve performance 
-				BIGX : mov		ax, x1; load x1 into ax
-				mov		bx, y1; load y1 into bx
-				mov		si, i1; load i1 into si
-				xor		di, di; load D into di
+				DELTAS
 				jmp		BPLOT; plot the first point
-				// next pixel selected with the least distance from true line
-				MORE : mov		dx, di; load decision variable D into dx
-				//cmp		dx, i1		; 9 + 6EA cycles every loop
-				cmp		dx, si; 3 reg, reg cycles every loop(20 % of reg, mem)
-				jl		HZ; D too - ve so must be horizontal
-				add		bx, step_y; vertical step
-				sub		dx, delta_x; update decision variable D - delta_x
-				cmp		di, i2; check old D diagonal move
-				jg		NDIAG; no horizontal only
-				HZ : add		ax, step_x; x = x + step_x
-				add		dx, delta_y; update decision variable D + delta_y
-				NDIAG : mov		di, dx; store D
-				// inline plot pixel (x,y) as (ax,bx)
+MORE:			LEASTD			
 BPLOT:			PLOT_PUSH
-				MODE6_XY(bx, ax)
+				MODE6_BXY
 				PLOT_OR
 				PLOT_POP
-
 				loop	MORE
-
 				LINE_POP
 			}
 		}
@@ -366,7 +369,22 @@ BPLOT:			PLOT_PUSH
 			}
 		}
 
-		//static inline void draw_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2) {}
+		static inline void draw_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
+			int16_t delta_x, delta_y, step_x, step_y, i1, i2;
+			__asm {
+				.8086
+				LINE_PUSH
+				DELTAS
+				jmp		BPLOT; plot the first point
+				MORE : LEASTD
+				BPLOT : PLOT_PUSH
+				MODE6_BXY
+				PLOT_XOR
+				PLOT_POP
+				loop	MORE
+				LINE_POP
+			}
+		}
 
 	};
 
