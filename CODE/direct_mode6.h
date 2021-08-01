@@ -3,6 +3,14 @@
 #include <stdint.h>
 #include <cassert>
 
+#define EVEN_LINES	0B800h	
+#define ODD_LINES	0BA00h
+
+#define CONTROL_REG 3D8h
+#define STATUS_REG	3DAh
+
+static float MODE6_SCALE = 0.3125;
+
 #define SCALE_NPX(y_, scale_) \
 __asm	.8087			\
 __asm	finit			\
@@ -42,14 +50,9 @@ __asm	pop		cx		\
 __asm	pop		bx		\
 __asm	pop		ax
 
-#define PLOT_OR		__asm	or		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl 
+#define PLOT_OR		or		es:[bx], dl
 
-#define PLOT_XOR	__asm	xor		es:[bx], dl		; es:bx now pointing to correct byte and pixel in dl
-
-#define EVEN_LINES	0B800h	
-#define ODD_LINES	0BA00h
-
-static float MODE6_SCALE = 0.3125;
+#define PLOT_XOR	xor		es:[bx], dl
 
 /**
  * calculate row byte y/2 * 80 bytes per row
@@ -229,49 +232,154 @@ __asm	NDIAG:	mov	di, dx
 	if (x_ >= xscale_) x_ = x_ - xscale_; \
 	if (y_ >= yscale_) y_ = y_ - yscale_;
 
+#define SCREEN_OFF \
+__asm	mov		dx, CONTROL_REG	\
+__asm	in		al, dx			\
+__asm	and		al, 11110111b	\
+__asm	out		dx, al	
+
+#define SCREEN_OFF \
+__asm	push	ax	\
+__asm	push	dx	\
+__asm	mov		dx, CONTROL_REG	\
+__asm	in		al, dx			\
+__asm	and		al, 11110111b	\
+__asm	out		dx, al			\
+__asm	pop		dx	\
+__asm	pop		ax	
+
+#define SCREEN_ON \
+__asm	push	ax	\
+__asm	push	dx	\
+__asm	mov		dx, CONTROL_REG	\
+__asm	in		al, dx			\
+__asm	or		al, 00000100b	\
+__asm	out		dx, al			\
+__asm	pop		dx	\
+__asm	pop		ax	
+
+#define SYNC \
+__asm	push	ax	\
+__asm	push	dx	\
+__asm	mov		dx, STATUS_REG	\
+__asm	SNOW:	in	al, dx	\		
+__asm	test	al, 8		\
+__asm	je		SNOW		\
+__asm	pop		dx	\
+__asm	pop		ax
+
 namespace mode6 {
 
 	inline void cls() {
 		__asm {
 			.8086
 
-			mov		dx, 3DAh
-L1:			in		al, dx
-			test	al, 1
-			jz		L1
+			push	ax
+			push	cx
+			push	di
+			push	es
+
 			mov		ax, EVEN_LINES
-			mov		es, ax
-			xor		ax, ax
-			xor		di, di
-			cld
-			mov		cx, 1000h
-			rep		stosw
-			mov		dx, 3DAh
-L2:			in		al, dx
-			test	al, 1
-			jz		L2
-			xor		ax, ax
-			mov		cx, 1000h
-			rep		stosw
+			mov		es, ax				; video RAM segment address
+			xor		di, di				; zero destination index
+			cld							; set increment mode
+			mov		cx, 2000h			; 16K video ram in word steps
+			
+			xor		ax, ax				; zero ax
+			rep		stosw				; fill video ram with 0
+			
+			pop		es
+			pop		di
+			pop		cx
+			pop		ax
 		}
 	}
 
 	inline void sync() {
 		__asm {
 			.8086
-			mov		dx, 3DAh
-L1:			in		al, dx
-			test	al, 1h
-			jz		L1
+			push	ax	
+			push	dx
+
+			mov		dx, STATUS_REG	
+	SNOW:	in		al, dx	
+			test	al, 8		
+			je		SNOW
+
+			pop		dx	
+			pop		ax
 		}
 	}
 
-	inline void wait() {
+	inline void spin_wait(uint16_t delay) {
 		__asm {
 			.8086
-			mov		cx, 0FFFh
+			push	cx
+			
+			mov		cx, delay
 L1:			nop
 			loop	L1
+
+			pop		cx
+		}
+	}
+
+	inline void show_wait(uint16_t delay) {
+		__asm {
+			.8086
+			push	ax	
+			push	cx
+			push	dx			
+
+			mov		dx, CONTROL_REG
+			in		al, dx
+			or		al, 00000100b		; screen on
+			out		dx, al
+
+			mov		cx, delay			
+L1:			nop
+			loop	L1
+
+			mov		dx, CONTROL_REG
+			in		al, dx
+			and al, 11110111b			; screen off
+			out		dx, al
+
+			pop		dx
+			pop		cx
+			pop		ax
+		}
+	}
+
+	inline void screen_off() {
+		__asm {
+			.8086
+			push	ax
+			push	dx
+
+			mov		dx, CONTROL_REG
+			in		al, dx
+			and al, 11110111b			; screen off
+			out		dx, al
+
+			pop		dx
+			pop		ax
+		}
+	}
+
+	inline void screen_on() {
+		__asm {
+			.8086
+			push	ax
+			push	dx
+
+			mov		dx, CONTROL_REG
+			in		al, dx
+			or		al, 00000100b		; screen on
+			out		dx, al
+
+			pop		dx
+			pop		ax
 		}
 	}
 
@@ -343,6 +451,7 @@ L1:			nop
 				.8086
 				LINE_PUSH
 				DELTAS
+				//SCREEN_OFF
 				jmp		BPLOT; plot the first point
 MORE:			LEASTD			
 BPLOT:			PLOT_PUSH
@@ -350,6 +459,7 @@ BPLOT:			PLOT_PUSH
 				PLOT_OR
 				PLOT_POP
 				loop	MORE
+				//SCREEN_ON
 				LINE_POP
 			}
 		}
@@ -375,13 +485,15 @@ BPLOT:			PLOT_PUSH
 				.8086
 				LINE_PUSH
 				DELTAS
+				//SCREEN_OFF
 				jmp		BPLOT; plot the first point
-				MORE : LEASTD
-				BPLOT : PLOT_PUSH
+MORE:			LEASTD
+BPLOT:			PLOT_PUSH
 				MODE6_BXY
 				PLOT_XOR
 				PLOT_POP
 				loop	MORE
+				//SCREEN_ON
 				LINE_POP
 			}
 		}

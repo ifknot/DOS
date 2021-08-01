@@ -1,3 +1,6 @@
-main.cpp(169): Warning! W015: col(3) nested comment found in comment started on line 142
+direct_mode6.h(249): Warning! W086: col(25) definition of macro 'SCREEN_OFF' not identical to previous definition
+direct_mode6.h(249): Note! N393: col(25) included from main.cpp(8)
+direct_mode6.h(249): Note! N851: col(25) macro 'SCREEN_OFF' defined in: direct_mode6.h(235) (col 9)
+main.cpp(168): Warning! W015: col(3) nested comment found in comment started on line 141
 C:\WATCOM\h\memory(128): Warning! W014: col(61) no reference to symbol 'video_adapter_names'
 display_types.h(172): Note! N392: col(21) definition: 'char dos::video_adapter_names[10][255]'

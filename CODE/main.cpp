@@ -21,47 +21,46 @@ int main() {
 
     uint32_t t1, t2;
     system::reset_clock_counter(0);
-    int redraws = 200;
+    int redraws = 500;
 
     t1 = system::read_clock_counter();
+    //mode6::screen_off();
     for (int i = 0; i < redraws; ++i) {
-        int16_t x = 0 + (i * 5);
-        //mode6::sync();
+        int16_t x = 0 + (i * 2);
         mode6::gfx<mode6::plot_or, mode6::clip_torus, mode6::scale_none>::draw_line(x, 100, x + 10, 120);
-        mode6::wait();
-        //mode6::sync();
+        mode6::spin_wait(0x1FF);
         mode6::gfx<mode6::plot_xor, mode6::clip_torus, mode6::scale_none>::draw_line(x, 100, x + 10, 120);
-        //mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_none>(x, 100, 10);
         //mode6::cls();
     }
+    //mode6::screen_on();
     t2 = system::read_clock_counter();
     float a = (float)(t2 - t1) / 18.206;
 
+    /*
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
         int16_t y = 50 - (i * 5);
-        mode6::gfx<mode6::plot_or, mode6::clip_torus, mode6::scale_none>::draw_line(320, y, 320, y + 10);
+        mode6::cls();
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_third>(-5 + (i * 5), 640 + (i * 5), 10);
         mode6::wait();
-        //mode6::sync();
-        mode6::gfx<mode6::plot_xor, mode6::clip_torus, mode6::scale_none>::draw_line(340, y, 340, y + 10);
+        //std::getchar();
     }
     t2 = system::read_clock_counter();
     float b = (float)(t2 - t1) / 18.206;
 
     t1 = system::read_clock_counter();
     for (int i = 0; i < redraws; ++i) {
-        mode6::sync();
-        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 10);
-        mode6::sync();
-        mode6::bresenham_circle<mode6::plot_xor, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 10);
-
+        mode6::cls();
+        mode6::bresenham_circle<mode6::plot_or, mode6::clip_torus, mode6::scale_npx>(-5 + (i * 5), 640 + (i * 5), 50);
+        mode6::wait();
+        //std::getchar();
     }
     t2 = system::read_clock_counter();
-
-    std::cout << redraws << " circle redraws = " << a << '\n';
-    std::cout << redraws << " scaled circle redraws = " << b << '\n';
-    std::cout << redraws << " npx scaled circle redraws = ";
-    std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
+    */
+    std::cout << redraws << " line redraws = " << a << '\n';
+    //std::cout << redraws << " scaled circle redraws = " << b << '\n';
+    //std::cout << redraws << " npx scaled circle redraws = ";
+    //std::cout << ((float)(t2 - t1)) / 18.206 << "sec\n";
 
     //-----------------------------------------------------
     std::cout << "press enter...";

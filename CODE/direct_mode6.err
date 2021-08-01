@@ -1,0 +1,3 @@
+direct_mode6.h(249): Warning! W086: col(25) definition of macro 'SCREEN_OFF' not identical to previous definition
+direct_mode6.h(249): Note! N393: col(25) included from direct_mode6.cpp(1)
+direct_mode6.h(249): Note! N851: col(25) macro 'SCREEN_OFF' defined in: direct_mode6.h(235) (col 9)
