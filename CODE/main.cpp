@@ -26,11 +26,19 @@ int main() {
     t1 = system::read_clock_counter();
     //mode6::screen_off();
     for (int i = 0; i < redraws; ++i) {
-        int16_t x = 0 + (i * 2);
+        int16_t x = 0 + (i*5);
+        //mode6::screen_off();
+        mode6::vsync();
         mode6::gfx<mode6::plot_or, mode6::clip_torus, mode6::scale_none>::draw_line(x, 100, x + 10, 120);
-        mode6::spin_wait(0x1FF);
+        //mode6::screen_on();
+        mode6::spin_wait(0x100);
+        //mode6::screen_off();
+        //mode6::show_wait(0x1FF);
+        mode6::vsync();
         mode6::gfx<mode6::plot_xor, mode6::clip_torus, mode6::scale_none>::draw_line(x, 100, x + 10, 120);
+        //mode6::screen_off();
         //mode6::cls();
+        //mode6::screen_on();
     }
     //mode6::screen_on();
     t2 = system::read_clock_counter();

@@ -295,7 +295,16 @@ namespace mode6 {
 		}
 	}
 
-	inline void sync() {
+	/**
+	 * It is possible to synchronise with vertical blank
+	 * but it involves polling (as does avoiding snow on CGA). 
+	 * Two bits are important in the status register read from 03DA
+	 *	bit 0 is 1 when the CPU can touch the CGA buffer without causing snow
+	 *	bit 3 is 1 during vertical retrace.
+	 * So a change in bit 3 from 0 to 1 would signal the start of a vertical blank
+	 * 
+	 */
+	inline void vsync() {
 		__asm {
 			.8086
 			push	ax	
@@ -303,8 +312,8 @@ namespace mode6 {
 
 			mov		dx, STATUS_REG	
 	SNOW:	in		al, dx	
-			test	al, 8		
-			je		SNOW
+			test	al, 1			
+			jne		SNOW
 
 			pop		dx	
 			pop		ax
@@ -451,7 +460,6 @@ L1:			nop
 				.8086
 				LINE_PUSH
 				DELTAS
-				//SCREEN_OFF
 				jmp		BPLOT; plot the first point
 MORE:			LEASTD			
 BPLOT:			PLOT_PUSH
@@ -459,7 +467,6 @@ BPLOT:			PLOT_PUSH
 				PLOT_OR
 				PLOT_POP
 				loop	MORE
-				//SCREEN_ON
 				LINE_POP
 			}
 		}
@@ -485,7 +492,6 @@ BPLOT:			PLOT_PUSH
 				.8086
 				LINE_PUSH
 				DELTAS
-				//SCREEN_OFF
 				jmp		BPLOT; plot the first point
 MORE:			LEASTD
 BPLOT:			PLOT_PUSH
@@ -493,7 +499,6 @@ BPLOT:			PLOT_PUSH
 				PLOT_XOR
 				PLOT_POP
 				loop	MORE
-				//SCREEN_ON
 				LINE_POP
 			}
 		}
@@ -652,7 +657,7 @@ BPLOT:			PLOT_PUSH
 
 	void fast_horizontal_line(uint16_t x1, uint16_t x2, uint16_t y);
 
-	void bresenham_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
+	//void bresenham_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 
 	void fast_box(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 

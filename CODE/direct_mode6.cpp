@@ -148,6 +148,7 @@ namespace mode6 {
 		}
 	}
 
+	/*
 	void bresenham_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
 		int16_t delta_x, delta_y, step_x, step_y, i1, i2;
 		__asm {
@@ -265,5 +266,5 @@ namespace mode6 {
 			pop		ax
 		}
 	}
-
+	*/
 }
