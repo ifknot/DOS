@@ -1,5 +1,5 @@
 # DOS16
-![tiny xt](https://cldup.com/MWyAWo2qLY.png)
+![small logo](https://cldup.com/G8zHV4HeeN.png)
 
 DOS 16 bit Real Mode Software written in C++98 and 8086 Assembly Language
 
